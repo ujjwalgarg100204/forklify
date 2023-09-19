@@ -48,7 +48,7 @@ const RecipeSearchBar = () => {
         recipe,
     ) => {
         if (!recipe) return;
-        router.push(`/recipes/${recipe.id}`);
+        router.push(`/recipe/${recipe.id}`);
     };
 
     const handleInputChange: SearchBarProps<Recipe>["onInputChange"] = (
