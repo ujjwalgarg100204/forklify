@@ -14,6 +14,10 @@ export const metadata: Metadata = {
         "Discover Forklify: Your Ultimate Recipe Sharing Destination. " +
         "Explore a Variety of Culinary Creations, Connect with Food Lovers, and " +
         "Create Recipe Collections. Join Now and Indulge in Gastronomic Delights",
+    other: {
+        "google-site-verification":
+            "F8ZfoimM4VrJSdKrEAS-RPOCAs7xhDcuuLeI59JvW_Q",
+    },
 };
 
 export default function RootLayout({
