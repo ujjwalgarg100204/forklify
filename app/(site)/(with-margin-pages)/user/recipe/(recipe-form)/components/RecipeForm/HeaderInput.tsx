@@ -11,7 +11,7 @@ import { RecipeCategory, RecipeRegion } from "@prisma/client";
 
 import Image from "next/image";
 import { useFormContext } from "react-hook-form";
-import { RecipeFormSchema } from "./index";
+import { RecipeFormSchema } from "../../[id]/edit/components/index";
 
 const HeaderInput = () => {
     const {

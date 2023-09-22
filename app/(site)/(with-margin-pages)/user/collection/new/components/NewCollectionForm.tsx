@@ -2,16 +2,17 @@
 
 import { SubmitHandler, useForm } from "react-hook-form";
 
-import { newCollection } from "@/app/actions/collectionUpdateForm";
-import { useUserContext } from "@/app/contexts/UserProvider/UserProvider";
-import LoadingSpinner from "@components/UI/LoadingSpinner";
-import { zodResolver } from "@hookform/resolvers/zod";
-import { CircularProgress } from "@mui/material";
 import Avatar from "@mui/material/Avatar";
 import Button from "@mui/material/Button";
+import { CircularProgress } from "@mui/material";
+import LoadingSpinner from "@components/UI/LoadingSpinner";
 import TextField from "@mui/material/TextField";
 import { green } from "@mui/material/colors";
+import { newCollection } from "@/app/actions/collectionUpdateForm";
+import { useRouter } from "next/navigation";
+import { useUserContext } from "@/app/contexts/UserProvider/UserProvider";
 import { z } from "zod";
+import { zodResolver } from "@hookform/resolvers/zod";
 
 const CollectionUpdateFormSchema = z.object({
     title: z.string().min(3).max(50),
@@ -22,6 +23,7 @@ const CollectionUpdateFormSchema = z.object({
 type CollectionUpdateFormSchema = z.infer<typeof CollectionUpdateFormSchema>;
 
 const NewCollectionForm = () => {
+    const router = useRouter();
     const { dispatch, user } = useUserContext();
     const {
         register,
@@ -51,6 +53,7 @@ const NewCollectionForm = () => {
                     recipeCollection: res.data.collection,
                 },
             });
+            router.push(`/collection/${res.data.collection.id}`);
         } catch (err) {
             setError("root.serverError", {
                 type: "500",

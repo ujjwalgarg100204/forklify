@@ -1,9 +1,10 @@
 import NewCollectionForm from "./components/NewCollectionForm";
+import Title from "@components/UI/Title";
 
 const NewCollectionPage = () => {
     return (
         <>
-            <h1>Create new Collection</h1>
+            <Title>Create new Collection</Title>
             <NewCollectionForm />
         </>
     );

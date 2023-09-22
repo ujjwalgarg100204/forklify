@@ -1,15 +1,12 @@
 "use client";
 
-import { Button, CircularProgress } from "@mui/material";
-import { Recipe, RecipeCategory, RecipeRegion } from "@prisma/client";
+import { Button, ButtonOwnProps, CircularProgress } from "@mui/material";
 import { FormProvider, SubmitHandler, useForm } from "react-hook-form";
+import { RecipeFormSchema, TRecipeFormSchema } from "./formSchema";
 
-import recipeEditForm from "@/app/actions/recipeEditForm";
-import { useUserContext } from "@/app/contexts/UserProvider/UserProvider";
 import { zodResolver } from "@hookform/resolvers/zod";
 import { green } from "@mui/material/colors";
-import { useRouter } from "next/navigation";
-import { z } from "zod";
+import { Recipe } from "@prisma/client";
 import HeaderInput from "./HeaderInput";
 import IngredientsInput from "./IngredientsInput";
 import NotesInput from "./NotesInput";
@@ -17,57 +14,15 @@ import NutritionInput from "./NutritionInput";
 import StepsInput from "./StepsInput";
 import TagsInput from "./TagsInput";
 
-type Props = {
-    recipe: Recipe;
+export type Props = {
+    recipe: Omit<
+        Recipe,
+        "id" | "recipeCollectionIDs" | "createdAt" | "updatedAt" | "userID"
+    >;
+    onSubmit: (data: TRecipeFormSchema) => Promise<void>;
 };
 
-const RecipeFormSchema = z.object({
-    title: z.string().min(3).max(50),
-    desc: z.string().min(3).max(500),
-    avatar: z.string().url(),
-    region: z.nativeEnum(RecipeRegion),
-    ingredients: z.array(
-        z.object({
-            name: z.string(),
-            quantity: z.object({
-                num: z
-                    .number()
-                    .or(z.string().regex(/\d+/).transform(Number))
-                    .refine(n => n >= 0),
-                suffix: z.string(),
-            }),
-        }),
-    ),
-    prepTime: z
-        .number()
-        .or(z.string().regex(/\d+/).transform(Number))
-        .refine(n => n >= 0),
-    cookTime: z
-        .number()
-        .or(z.string().regex(/\d+/).transform(Number))
-        .refine(n => n >= 0),
-    category: z.nativeEnum(RecipeCategory),
-    steps: z.array(z.object({ step: z.string().min(3).max(500) })),
-    notes: z.array(z.object({ note: z.string().min(3).max(500) })),
-    tags: z.array(z.object({ tag: z.string().min(3).max(20) })),
-    nutrition: z.array(
-        z.object({
-            value: z
-                .number()
-                .or(z.string().regex(/\d+/).transform(Number))
-                .refine(n => n >= 0)
-                .nullable(),
-        }),
-    ),
-    servings: z
-        .number()
-        .or(z.string().regex(/\d+/).transform(Number))
-        .refine(n => n >= 0),
-});
-
-export type RecipeFormSchema = z.infer<typeof RecipeFormSchema>;
-
-const RecipeUpdateForm = ({ recipe }: Props) => {
+const RecipeForm = ({ recipe, onSubmit: parentOnSubmit }: Props) => {
     const defaultValue = {
         ...recipe,
         steps: recipe.steps.map(step => ({ step })),
@@ -77,23 +32,15 @@ const RecipeUpdateForm = ({ recipe }: Props) => {
             ? Object.values(recipe.nutrition).map(value => ({ value }))
             : Array(4).fill({ value: 0 })) as { value: number | null }[],
     };
-    const formMethods = useForm<RecipeFormSchema>({
+    const formMethods = useForm<TRecipeFormSchema>({
         resolver: zodResolver(RecipeFormSchema),
         criteriaMode: "all",
         defaultValues: defaultValue,
     });
-    const { dispatch } = useUserContext();
-    const router = useRouter();
 
-    const onSubmit: SubmitHandler<RecipeFormSchema> = async data => {
+    const onSubmit: SubmitHandler<TRecipeFormSchema> = async data => {
         try {
-            const res = await recipeEditForm(recipe.id, data);
-            if (res.status === "error") throw new Error(res.message);
-            dispatch({
-                type: "UPDATE_RECIPE",
-                payload: { recipeId: recipe.id, recipe: res.data.recipe },
-            });
-            router.push(`/recipe/${recipe.id}`);
+            await parentOnSubmit(data);
         } catch (err) {
             formMethods.setError("root.server", {
                 type: "manual",
@@ -102,11 +49,10 @@ const RecipeUpdateForm = ({ recipe }: Props) => {
         }
     };
 
-    const buttonColor = formMethods.formState.errors.root?.server
-        ? "error"
-        : formMethods.formState.isSubmitSuccessful
-        ? "success"
-        : "secondary";
+    let buttonColor: ButtonOwnProps["color"] = "secondary";
+    if (formMethods.formState.errors.root?.server) buttonColor = "error";
+    else if (formMethods.formState.isSubmitSuccessful) buttonColor = "success";
+
     return (
         <FormProvider {...formMethods}>
             <form
@@ -153,4 +99,5 @@ const RecipeUpdateForm = ({ recipe }: Props) => {
         </FormProvider>
     );
 };
-export default RecipeUpdateForm;
+
+export default RecipeForm;
