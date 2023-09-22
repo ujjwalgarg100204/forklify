@@ -1,13 +1,13 @@
-import KeyboardArrowDownRoundedIcon from "@mui/icons-material/KeyboardArrowDownRounded";
-import { IconButton } from "@mui/material";
 import Button from "@mui/material/Button";
+import { IconButton } from "@mui/material";
 import Image from "next/image";
+import KeyboardArrowDownRoundedIcon from "@mui/icons-material/KeyboardArrowDownRounded";
 import Link from "next/link";
 
 const HeroSection = () => {
     return (
-        <div className="flex flex-col items-center justify-center gap-8 text-center text-white">
-            <div className={"absolute -z-10 flex h-full w-full"}>
+        <div className="flex h-screen flex-col items-center justify-start gap-8 text-center text-white">
+            <div className={"absolute inset-0 -z-10 flex h-full w-full"}>
                 <Image
                     src="/images/dishes/hero-section-dish.jpg"
                     alt="background image"
