@@ -11,14 +11,14 @@ import { RecipeCategory, RecipeRegion } from "@prisma/client";
 
 import Image from "next/image";
 import { useFormContext } from "react-hook-form";
-import { RecipeFormSchema } from "../../[id]/edit/components/index";
+import { TRecipeFormSchema } from "./formSchema";
 
 const HeaderInput = () => {
     const {
         register,
         watch,
         formState: { errors },
-    } = useFormContext<RecipeFormSchema>();
+    } = useFormContext<TRecipeFormSchema>();
     return (
         <section className="space-y-8">
             <div className="grid grid-cols-1 gap-6 md:grid-flow-col md:grid-rows-2">

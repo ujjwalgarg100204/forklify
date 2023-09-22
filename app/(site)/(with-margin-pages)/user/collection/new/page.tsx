@@ -1,5 +1,7 @@
-import NewCollectionForm from "./components/NewCollectionForm";
+"use client";
+
 import Title from "@components/UI/Title";
+import NewCollectionForm from "./components/NewCollectionForm";
 
 const NewCollectionPage = () => {
     return (

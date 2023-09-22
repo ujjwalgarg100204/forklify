@@ -3,14 +3,14 @@ import { useFieldArray, useFormContext } from "react-hook-form";
 
 import AddCircleOutlineIcon from "@mui/icons-material/AddCircleOutline";
 import RemoveCircleOutlineIcon from "@mui/icons-material/RemoveCircleOutline";
-import { RecipeFormSchema } from ".";
+import { TRecipeFormSchema } from "./formSchema";
 
 const IngredientsInput = () => {
     const {
         control,
         register,
         formState: { errors },
-    } = useFormContext<RecipeFormSchema>();
+    } = useFormContext<TRecipeFormSchema>();
     const { fields, append, remove } = useFieldArray({
         control,
         name: "ingredients",

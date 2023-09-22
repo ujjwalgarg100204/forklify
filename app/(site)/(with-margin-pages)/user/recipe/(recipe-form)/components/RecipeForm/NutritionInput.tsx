@@ -1,7 +1,7 @@
 import { InputAdornment, TextField } from "@mui/material";
 import { useFieldArray, useFormContext } from "react-hook-form";
 
-import { RecipeFormSchema } from ".";
+import { TRecipeFormSchema } from "./formSchema";
 
 const NUTRITION = ["calories", "fat", "carbs", "protein"];
 
@@ -10,7 +10,7 @@ const NutritionInput = () => {
         control,
         register,
         formState: { errors },
-    } = useFormContext<RecipeFormSchema>();
+    } = useFormContext<TRecipeFormSchema>();
     const { fields } = useFieldArray({ control, name: "nutrition" });
 
     return (

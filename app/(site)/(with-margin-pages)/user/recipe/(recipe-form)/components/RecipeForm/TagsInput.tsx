@@ -3,7 +3,7 @@ import { useFieldArray, useFormContext } from "react-hook-form";
 
 import AddCircleOutlineIcon from "@mui/icons-material/AddCircleOutline";
 import { v4 as uuidV4 } from "uuid";
-import { RecipeFormSchema } from ".";
+import { TRecipeFormSchema } from "./formSchema";
 
 const TagsInput = () => {
     const {
@@ -11,7 +11,7 @@ const TagsInput = () => {
         watch,
         register,
         formState: { errors },
-    } = useFormContext<RecipeFormSchema>();
+    } = useFormContext<TRecipeFormSchema>();
     const { fields, append, remove } = useFieldArray({ control, name: "tags" });
     const handleAppend = () => append({ tag: "" });
     const handleRemove = (i: number) => remove(i);

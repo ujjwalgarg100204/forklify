@@ -3,7 +3,7 @@ import CollectionCard from "@components/Collection/CollectionCard";
 import { prisma } from "@utils/db";
 import { getServerSession } from "next-auth";
 import { redirect } from "next/navigation";
-import { COLLECTION_SELECTOR } from "../../../(other-pages)/collection/explore/page";
+import { COLLECTION_SELECTOR } from "../../collection/explore/page";
 
 const UserCollectionsPage = async () => {
     const session = await getServerSession(authOptions);

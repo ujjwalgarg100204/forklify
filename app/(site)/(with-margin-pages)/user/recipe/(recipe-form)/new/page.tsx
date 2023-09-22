@@ -2,7 +2,7 @@
 
 import { useUserContext } from "@/app/contexts/UserProvider/UserProvider";
 import Title from "@components/UI/Title";
-import { useRouter } from "next/navigation";
+import { redirect, useRouter } from "next/navigation";
 import createNewRecipe from "../actions/createNewRecipe";
 import type { Props as RecipeFormProps } from "../components/RecipeForm";
 import RecipeForm from "../components/RecipeForm";
@@ -27,7 +27,7 @@ const NewRecipePage = () => {
     const { user, dispatch } = useUserContext();
     const router = useRouter();
 
-    if (!user) throw new Error("User is not logged in");
+    if (!user) redirect("/login");
 
     const handleRecipeFormSubmission: RecipeFormProps["onSubmit"] =
         async recipe => {
