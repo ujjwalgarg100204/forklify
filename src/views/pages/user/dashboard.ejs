@@ -1,0 +1,57 @@
+<%- include("../../components/UI/HeadIncluder", { titleOfPage: "Dashboard", linkJS: "" }) -%>
+<body class="font-heading bg-[#e6e6e6]">
+<%- include("../../components/Layout/Header", { user, dropdownOption: "Dashboard" }) -%>
+<main class="space-y-16 bg-white">
+    <div class="p-20 bg-[#E5DDD5] grid place-content-center">
+        <img class="rounded-full w-44 h-44 border border-selected-mehandi" src="<%= user.profile.avatar; %>"
+             alt="<%= user.profile.name; %>">
+    </div>
+    <div class="px-[10%] space-y-10">
+        <div class=" flex justify-center gap-36">
+            <% [
+                [`${user.bookmarkedRecipes.length}`, "😋", "Bookmarked Recipes"],
+                [`${commentsNum}`, "🥰", "Comments on your Recipes"]
+            ].forEach(i => { %>
+                <div class="space-y-4 text-2xl">
+                    <p class="font-heading text-5xl font-bold text-center ">
+                        <span class="underline mx-3"><%= i[0]; %></span>
+                        <%= i[1]; %>
+                    </p>
+                    <p class="font-small-heading"><%= i[2]; %></p>
+                </div>
+            <% }); %>
+        </div>
+        <% if (user.profile.bio) { %>
+            <p class="p-8 bg-gray-100 rounded-xl text-lg">
+                <%= user.profile.bio; %>
+            </p>
+        <% } %>
+    </div>
+    <div class="p-20 pt-0 space-y-16">
+        <div class="relative">
+            <h2 class="text-4xl font-heading flex justify-between items-center  pr-32">
+                Your Recipes Online 🟢
+                <a href="/u/recipes">
+                    <%- include("../../components/Icons/UI/ArrowTopRightPoint", { containerClass: "p-3 aspect-square w-16 hover:bg-slate-100 rounded-full", svgClass: "w-full h-full stroke-amber-600" }) -%>
+                </a>
+            </h2>
+            <%- include("../../components/Recipe/Sliders/RecipeCardSlider", { name: "userRecipes", recipes }) -%>
+        </div>
+        <div class="relative">
+            <h2 class="text-4xl font-heading flex justify-between items-center pr-32">
+                Your Collections 📂
+                <a href="/u/collections">
+                    <%- include("../../components/Icons/UI/ArrowTopRightPoint", { containerClass: "p-3 aspect-square w-16 hover:bg-slate-100 rounded-full", svgClass: "w-full h-full stroke-amber-600" }) -%>
+                </a>
+            </h2>
+            <div class="flex items-center">
+                <%- include("../../components/RecipeCollection/Sliders/RecipeCollectionSlider", { collections }) -%>
+            </div>
+        </div>
+    </div>
+</main>
+
+
+<%- include("../../components/Layout/Footer") -%>
+</body>
+</html>

@@ -1,0 +1,104 @@
+<div class="swiper-slide shadow-xl rounded-xl font-heading cursor-pointer !h-auto max-w-fit hover:scale-110 transition duration-300 hover:shadow-2xl group/card"
+     data-id="<%= recipe.id; %>"
+     title="<%= recipe.title; %>">
+    <div class="relative bg-cover bg-center aspect-[9/10] w-[18rem] flex flex-col justify-between p-6 text-white rounded-t-xl"
+         style="background-image: url('<%= recipe.image; %>')">
+        <p class="w-fit px-4 py-1 bg-selected-mehandi rounded-full capitalize">
+            <%= recipe.region %>
+        </p>
+        <p class="w-fit rounded-full font-bold px-4 py-2 bg-[rgba(0,0,0,0.4)]">
+            <% if (recipe.totalCookTime > 3600) { %>
+                <%= Math.floor(recipe.totalCookTime / 3600) %>
+                hours <%= Math.round((recipe.totalCookTime % 3600) / 60) %>
+            <% } else { %>
+                <%= Math.round(recipe.totalCookTime / 60) %> mins
+            <% } %>
+        </p>
+
+        <div class="opacity-0 flex flex-col gap-4 absolute -right-4 -top-4 transition-all duration-300 group-hover/card:opacity-100">
+            <!-- Additional Actions -->
+            <button class="hover:scale-110 transition group/icon" title="Edit Recipe" data-edit-recipe="">
+                <%- include("../../components/Icons/UI/Actions/Edit" , { containerClass: "bg-amber-600 p-3 rounded-full w-12 h-12 group-hover/icon:bg-amber-500", svgClass: "w-full h-full stroke-white" }) -%>
+            </button>
+            <button class="hover:scale-110 transition group/icon" title="Delete Recipe" data-delete-recipe="">
+                <%- include("../../components/Icons/UI/Actions/Trash" , { containerClass: "bg-amber-600 p-3 rounded-full w-12 h-12 group-hover/icon:bg-amber-500", svgClass: "w-full h-full stroke-white" }) -%>
+            </button>
+            <button class="hover:scale-110 transition group/icon" title="Bookmark Recipe" data-bookmark-recipe="">
+                <% if (recipe.bookmarked) { %>
+                    <%- include("../../components/Icons/UI/Actions/BookmarkSolid", { containerClass: "bg-amber-600 p-3 rounded-full w-12 h-12 group-hover/icon:bg-amber-500", svgClass: "w-full h-full fill-white" }) -%>
+                <% } else { %>
+                    <%- include("../../components/Icons/UI/Actions/BookmarkRegular", { containerClass: "bg-amber-600 p-3 rounded-full w-12 h-12 group-hover/icon:bg-amber-500", svgClass: "w-full h-full fill-white"}) -%>
+                <% } %>
+            </button>
+            <button class="hover:scale-110 transition group/icon" title="Add to Collection" data-add-to-collection="">
+                <%- include("../../components/Icons/UI/Actions/PlusWithNoCircle", { containerClass: "bg-amber-600 p-3 rounded-full w-12 h-12 group-hover/icon:bg-amber-500", svgClass: "w-full h-full stroke-white" }) -%>
+                <%# TODO: I am currenty thinking that I will this button a dropdown instead from the get go and animate like the
+                opening of a search bar and then show the dropdown box %>
+            </button>
+        </div>
+    </div>
+    <div class="py-4 px-6 space-y-2 flex-1 w-[18rem]">
+        <!-- Rating Star div -->
+        <div class="flex gap-2">
+            <!-- Filled Stars-->
+            <% Array(recipe.stars).fill("").forEach(_ => { %>
+                <%- include("../../components/Icons/Reactions/StarSolid", {containerClass: "", svgClass: "w-5 fill-amber-600"}) -%>
+            <% }); %>
+
+            <!-- Unfilled Stars-->
+            <% Array(5 - (recipe.stars)).fill("").forEach(_ => { %>
+                <%- include("../../components/Icons/Reactions/StarRegular", {containerClass: "", svgClass: "w-5 fill-amber-600"}) -%>
+            <% }); %>
+        </div>
+
+        <h1 class="text-black text-2xl capitalize break-words">
+            <%= recipe.title; %>
+        </h1>
+        <p class="text-selected-mehandi text-base">
+            <%= recipe.ingredients?.length %> ingredients
+        </p>
+
+    </div>
+</div>
+<script>
+
+	document.querySelector("[data-id='<%= recipe.id; %>']").addEventListener("click", async function(ev) {
+		// check which button was clicked
+		const editButton = ev.target.closest("[data-edit-recipe]");
+		const deleteButton = ev.target.closest("[data-delete-recipe]");
+		const bookmarkButton = ev.target.closest("[data-bookmark-recipe]");
+		const addToCollectionButton = ev.target.closest("[data-add-to-collection]");
+
+		if (editButton) {
+			// go to edit page of recipe
+			location.href = `/u/recipes/edit/<%= recipe.id %>`
+
+		} else if (deleteButton) {
+			// go to delete page of recipe
+			location.href = `/u/recipes/delete/<%= recipe.id %>`;
+
+		} else if (bookmarkButton) {
+			// bookmark the recipe
+			try {
+				const res = await fetch("/u/recipes/bookmark/<%= recipe.id %>");
+
+				// if error occurs simply return
+				if (res.status !== 200) return;
+				const resJson = await res.json();
+				console.log(resJson);
+				resJson.error
+					? bookmarkButton.querySelector("svg").classList.toggle("bookmark-error")
+					: location.reload();
+			} catch (e) {
+				bookmarkButton.querySelector("svg").classList.toggle("bookmark--error");
+			}
+
+		} else if (addToCollectionButton) {
+			// add the recipe to the collection by choosing from the dropdown menu
+
+		} else {
+			// redirect to recipe page
+			location.href = '/r/<%= recipe.id; %>'
+		}
+	});
+</script>

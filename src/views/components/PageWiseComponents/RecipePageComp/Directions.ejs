@@ -1,0 +1,16 @@
+<div class="max-w-[40%] space-y-8 relative">
+    <h1 class="font-heading font-[550] text-gray-900 text-5xl">Directions</h1>
+    <ul class="font-body text-gray-900 text-lg space-y-4">
+        <% steps.forEach((step, i) => { %>
+            <li>
+                <div class="space-y-2">
+                    <h4 class="text-amber-600">Step <%= i + 1; %></h4>
+                    <p><%= step %></p>
+                </div>
+            </li>
+        <% }); %>
+    </ul>
+    <button class="absolute right-0 text-selected-mehandi underline text-right">
+        Show all
+    </button>
+</div>

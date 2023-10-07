@@ -1,0 +1,14 @@
+<%- include("../../components/UI/HeadIncluder", { titleOfPage: "Popular Recipes", linkJS: "" }) -%>
+<body class="font-heading space-y-20 bg-[#e6e6e6]">
+<%- include("../../components/Layout/Header", { user, dropdownOption: "Popular Recipes" }) -%>
+
+<main class="mt-20 pb-16 px-[10%] space-y-12">
+    <h1 class="text-6xl font-bold tracking-light text-center capitalize">
+        Popular Recipes on Platform 🤤
+    </h1>
+    <%- include("../../components/Recipe/Sliders/RecipeCardGridSlider", { recipes }) -%>
+</main>
+
+<%- include("../../components/Layout/Footer") -%>
+</body>
+</html>

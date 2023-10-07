@@ -1,0 +1,27 @@
+<header class="flex justify-between px-20 py-6 bg-mehandi text-white items-center font-heading">
+    <a href="/" class="bg-[rgba(0,0,0,0.1)] rounded-full p-4 cursor-pointer">
+        <img class="w-32" src="/images/icons/brand/brand.png" alt="brand">
+    </a>
+
+    <ul class="flex gap-14 justify-center items-center text-lg">
+        <li>
+            <a href="/about">About us</a>
+        </li>
+        <li>
+            <a href="/r/search">Find recipes</a>
+        </li>
+        <li>
+            <a href="/r/popular">Popular recipes</a>
+        </li>
+        <% if (user) { %>
+            <%- include("../UI/Dropdown", { selected: dropdownOption }) -%>
+        <% } else { %>
+            <li class="ml-16 rounded-full bg-[rgb(96,107,55)] p-2 px-8 grid place-content-center">
+                <a href="/auth/login">
+                    Sign in / Register
+                </a>
+            </li>
+        <% } %>
+
+    </ul>
+</header>

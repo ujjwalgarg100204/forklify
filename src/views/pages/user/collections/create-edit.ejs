@@ -1,0 +1,43 @@
+<%- include("../../../components/UI/HeadIncluder", { titleOfPage: "Create Collection", linkJS: "" }) -%>
+<body>
+<%- include("../../../components/Layout/Header", { user, dropdownOption: "Create Collection" }) -%>
+
+<main class="mt-20 space-y-20 pb-24 px-[10%]">
+    <h1 class="text-6xl font-bold font-heading tracking-tight text-center capitalize">
+        <%= editable ? "Edit" : "Create"; %> Your Collection ✏️ 📂
+    </h1>
+    <form action="#" method="POST" class="grid grid-cols-2 gap-x-40 gap-y-20 justify-items-center">
+        <div class="space-y-12 justify-self-end">
+            <input type="text"
+                   id="title"
+                   name="title"
+                   autocomplete="off"
+                   placeholder="Title of Collection"
+                   class="w-full py-1 text-4xl focus:outline-none border-b focus:border-amber-600 focus:border-b-2 transition-colors"
+                   value="<%= editable ? collection.title : ""; %>"
+                   required
+            />
+            <textarea name="desc"
+                      class="w-full py-1 h-10 focus:outline-none border-b focus:border-amber-600 focus:border-b-2 transition-colors text-xl"
+                      placeholder="Description"
+                      autocomplete="off"
+                      required
+            ><%= editable ? collection.desc : ""; %></textarea>
+        </div>
+        <textarea name="image"
+                  id="image"
+                  class="rounded-full w-48 h-48 p-8 bg-white border-2 border-selected-mehandi focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-selected-mehandi placeholder:text-center"
+                  placeholder="Your Collection's image's URL"
+                  autocomplete="off"
+                  required
+        ><%= editable ? collection.image : "" %></textarea>
+
+        <div class="col-span-2">
+            <%- include("../../../components/UI/Button", { id: "", type: "s", text: `${editable ? "Update" : "Create"}` }) -%>
+        </div>
+    </form>
+</main>
+
+<%- include("../../../components/Layout/Footer") -%>
+</body>
+</html>

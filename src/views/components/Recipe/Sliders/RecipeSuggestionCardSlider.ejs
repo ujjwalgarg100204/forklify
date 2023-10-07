@@ -1,0 +1,32 @@
+<!-- Link Swiper's CSS -->
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/swiper@9/swiper-bundle.min.css" />
+
+<!-- Swiper -->
+<div class="swiper recommendation-recipe-slider pb-40">
+    <div class="swiper-wrapper">
+        <% recipes.forEach(recipe => { %>
+            <%- include("../RecipeRecommendationCard", { recipe }) -%>
+        <% }); %>
+    </div>
+    <div class="swiper-pagination"></div>
+</div>
+
+<!-- Swiper JS -->
+<script src="https://cdn.jsdelivr.net/npm/swiper@9/swiper-bundle.min.js"></script>
+
+<!-- Initialize Swiper -->
+<script>
+	new Swiper(".recommendation-recipe-slider", {
+		slidesPerView: 5,
+		spaceBetween: 50,
+		freeMode: true,
+		autoplay: {
+			delay: 2500,
+			disableOnInteraction: false,
+		},
+		pagination: {
+			el: ".swiper-pagination",
+			clickable: true,
+		},
+	});
+</script>

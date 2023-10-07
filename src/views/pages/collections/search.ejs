@@ -1,0 +1,55 @@
+<%- include("../../components/UI/HeadIncluder", { titleOfPage: "Search Collection" }) -%>
+<body>
+<%- include("../../components/Layout/Header", { user, dropdownOption: "Search Collection" }) -%>
+
+<form action="/c/search/results" method="POST" class="space-y-8">
+    <div class="flex flex-col items-center gap-8 relative font-heading z-1 text-white text-center py-28 before:bg-[url('/images/food/pexels-shantanu-pal-2679501.jpg')] before:absolute before:inset-0 before:-z-1 before:h-full before:w-full before:bg-cover before:bg-center before:brightness-50">
+        <h1 class="font-bold tracking-tighter text-7xl relative z-1">
+            Find best Collections
+        </h1>
+        <p class="text-lg relative z-1">
+            Search the best collection by collection filter
+        </p>
+        <div class="relative z-1 min-w-[50%]">
+            <%- include("../../components/UI/SearchBar") -%>
+        </div>
+    </div>
+
+    <div class="px-[14%] space-y-12 <%= showResults ? "" : "pb-20"; %>">
+        <div class="grid grid-cols-[1fr_2fr_2fr] gap-x-8 text-selected-mehandi">
+            <% filters.forEach(section => { %>
+                <div class="space-y-4 capitalize">
+                    <h1 class="font-[550] font-heading text-xl text-black">
+                        <%= section.title; %>
+                    </h1>
+                    <ul class="flex flex-wrap gap-4">
+                        <% section.filters.forEach((filter, index) => { %>
+                            <div>
+                                <input class="peer hidden" id="<%= `${section.title}-${index}` %>" type="checkbox"
+                                       value="<%= `${section.title}_${filter}` %>"
+                                       name="userFilters" />
+                                <label for="<%= `${section.title}-${index}` %>"
+                                       class="w-fit px-4 py-1 border border-selected-mehandi rounded-full peer-checked:bg-selected-mehandi peer-checked:text-white hover:bg-selected-mehandi hover:text-white transition duration-300 cursor-pointer">
+                                    <%= filter; %>
+                                </label>
+                            </div>
+                        <% }); %>
+                    </ul>
+                </div>
+            <% }); %>
+        </div>
+        <%- include("../../components/UI/Button", { id: "", btnClass: "", type: "s", text: "Show results" }) -%>
+    </div>
+</form>
+
+<% if (showResults) { %>
+    <hr class="h-[2px] bg-amber-400 my-10" />
+
+    <div id="search-results" class="px-[14%] space-y-32 pb-32">
+        <%- include( "../../components/RecipeCollection/Sliders/RecipeCollectionSlider", { collections: resultRecipeCollections }) -%>
+    </div>
+<% } %>
+
+<%- include("../../components/Layout/Footer") -%>
+</body>
+</html>

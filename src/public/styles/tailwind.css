@@ -1,0 +1,66 @@
+@import url("https://fonts.googleapis.com/css2?family=Montserrat:wght@400;500;600;700;800&family=Poppins:wght@400;500;600;700;800&family=Raleway:wght@500;600;700&display=swap");
+
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+.filter-selected {
+    @apply text-white bg-selected-mehandi;
+}
+
+/* Dropdown Recipe */
+
+.dropdown-menu {
+    z-index: 999;
+    border: 1px solid rgba(0, 0, 0, 0.15);
+}
+
+.dropdown-menu--active {
+    @apply opacity-100 visible
+}
+
+.dropdown-menu__link--active {
+    @apply bg-selected-mehandi
+}
+
+/* Recipe Card CSS */
+
+.bookmark--error {
+    @apply fill-rose-600
+}
+
+.bookmark--successful {
+    @apply fill-selected-mehandi
+}
+
+/* Search Bar */
+
+.search-input.active input {
+    @apply rounded-b-none shadow-none;
+}
+
+.search-input.active .autocom-box {
+    @apply px-2 flex pointer-events-auto;
+}
+
+.search-input.active .autocom-box div {
+    @apply block;
+}
+
+/* Swiper CSS */
+.swiper-slide {
+    --swiper-theme-color: #283618;
+    display: flex;
+    flex-direction: column;
+}
+
+.swiper-wrapper {
+    --swiper-theme-color: #283618;
+    color: hsl(74, 32%, 32%);
+    padding: 2.8rem !important;
+}
+
+div[data-prev], div[data-next] {
+    --swiper-theme-color: #283618;
+    position: relative;
+}

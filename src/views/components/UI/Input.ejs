@@ -1,0 +1,24 @@
+<div class="relative">
+    <input type="text"
+           id="<%= inpID; %>"
+           class="border-b w-full py-1 focus:outline-none focus:border-selected-mehandi focus:border-b-2 transition-colors peer <%= size === "lg" ? "text-2xl" : "text-base"; %>"
+           name="<%= inpID; %>"
+           autocomplete="off"
+    />
+    <label for="<%= inpID; %>"
+           class="absolute left-0 top-1 text-gray-600 cursor-text peer-focus:text-selected-mehandi transition-all <%= size === "lg" ? "text-lg peer-focus:-top-7 peer-focus:text-base" : "text-base peer-focus:text-xs peer-focus:-top-5"; %>">
+        <%= placeholder; %>
+    </label>
+</div>
+
+<script>
+	$("#<%= inpID; %>").blur(function() {
+		if ($(this).val()) {
+			$(this).addClass("border-selected-mehandi border-b-2");
+			$(this).siblings().addClass("text-selected-mehandi <%= size === "lg" ? "-top-5 text-base" : "-top-4 text-xs"; %>");
+		} else {
+			$(this).removeClass("border-selected-mehandi border-b-2");
+			$(this).siblings().removeClass("text-selected-mehandi <%= size === "lg" ? "-top-6 text-base" : "-top-4 text-xs"; %>");
+		}
+	});
+</script>

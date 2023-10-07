@@ -1,0 +1,485 @@
+<%- include("../../../components/UI/HeadIncluder", { titleOfPage: "Create recipe" }) -%>
+<body class="font-body text-mehandi">
+<%- include("../../../components/Layout/Header", { user, dropdownOption: "Create Recipe" }) -%>
+
+<main class="mt-20 pb-16 px-[10%] space-y-16">
+    <h1 class="text-6xl font-bold font-heading tracking-tight text-center capitalize">
+        <%= editable ? "Update" : "Create"; %> Your Recipe 🥞
+    </h1>
+    <form action="#" method="POST" class="grid grid-cols-2 gap-x-32 gap-y-20 justify-items-center">
+        <div class="flex justify-between w-full shadow-lg rounded-lg p-10 gap-20">
+            <!-- Recipe title and description -->
+            <div class="space-y-12 pt-5">
+                <input type="text"
+                       id="title"
+                       class="w-full text-center text-3xl font-bold py-1 focus:outline-none border-b focus:border-amber-600 focus:border-b-2 transition-colors"
+                       name="title"
+                       autocomplete="off"
+                       placeholder="Your Recipe's Title"
+                       value="<%= editable ? recipe.title : ""; %>"
+                       required
+                />
+                <textarea id="desc"
+                          class="w-full h-10 text-lg text-left py-1 focus:outline-none border-b focus:border-amber-600 focus:border-b-2 transition-colors"
+                          name="desc"
+                          placeholder="What is your recipe about?"
+                          autocomplete="off"
+                          required
+                ><%= editable ? recipe.desc : "" %></textarea>
+            </div>
+            <!-- Recipe Image URL Input -->
+            <textarea name="image"
+                      id="image"
+                      class="rounded-full w-48 h-48 p-8 bg-white border-2 border-selected-mehandi focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-selected-mehandi placeholder:text-center"
+                      placeholder="Your Recipe's image's URL"
+                      autocomplete="off"
+                      required><%= editable ? recipe.image : "" %></textarea>
+        </div>
+
+        <!-- Timings of recipe -->
+        <div class="w-full space-y-10 shadow-lg p-10 rounded-lg">
+            <h1 class="text-4xl">Timings of your recipe</h1>
+            <div class="space-y-12">
+                <!-- Input for timings of the recipe -->
+                <input type="text"
+                       id="prepTime"
+                       name="prepTime"
+                       autocomplete="off"
+                       placeholder="Preparation Time (in Secs)"
+                       class="w-full py-1 focus:outline-none border-b focus:border-amber-600 focus:border-b-2 transition-colors"
+                       value="<%= editable ? recipe.prepTime : "" %>"
+                       required
+                />
+                <input type="text"
+                       id="cookTime"
+                       name="cookTime"
+                       autocomplete="off"
+                       placeholder="Cook Time (in Secs)"
+                       class="w-full py-1 focus:outline-none border-b focus:border-amber-600 focus:border-b-2 transition-colors"
+                       value="<%= editable ? recipe.cookTime : "" %>"
+                       required
+                />
+            </div>
+        </div>
+        <div class="col-span-2 flex gap-10 justify-between items-center">
+            <label for="category">
+                <select class="p-3 px-10 border border-amber-400 bg-white rounded-full capitalize"
+                        name="category"
+                        id="category"
+                        autocomplete="off"
+                        required
+                >
+                    <option value="">--Select Category for your Recipe--</option>
+                    <% categories.forEach(category => { %>
+                        <option value="<%= category; %>"
+                                selected="<%= editable ? (recipe.category === category ? "selected" : "") : "" %>"><%= category; %></option>
+                    <% }); %>
+                </select>
+            </label>
+
+            <label for="regions">
+                <select class="p-3 px-10 border border-amber-400 bg-white rounded-full capitalize"
+                        name="region"
+                        id="regions"
+                        autocomplete="off"
+                        required
+                >
+                    <option value="">--Select Region of your Recipe--</option>
+                    <% regions.forEach(region => { %>
+                        <option value="<%= region %>"
+                                selected="<%= editable ? (recipe.region === region ? "selected" : "") : "" %>"><%= region %></option>
+                    <% }); %>
+                </select>
+            </label>
+        </div>
+
+        <!-- Tags of recipe -->
+        <div class="col-span-2 ">
+            <div class="flex gap-4 rounded-full ring-2 ring-amber-700 p-2 px-4 w-fit">
+                <%- include("../../../components/Icons/Reactions/Tag", { containerClass: "rounded-full p-2", svgClass: "w-8 stroke-amber-700" }) -%>
+                <div id="tag-container" class="flex gap-4"></div>
+                <label class="flex-4 ml-4">
+                    <input id="tags"
+                           class="w-full h-full focus:outline-none"
+                           type="text"
+                           placeholder="Tags of your recipe go here"
+                    />
+                </label>
+            </div>
+        </div>
+
+        <!-- Ingredients of recipe -->
+        <div class="space-y-6">
+            <h1 class="text-4xl font-bold">Ingredients of Your Recipe</h1>
+            <div class="flex items-center gap-5">
+                <label for="servings" class="text-sm">How many people does <br /> this recipe serve: </label>
+                <input class="p-3 w-20 text-center text-sm focus:outline-none focus:ring focus:ring-amber-600 rounded-full"
+                       id="servings"
+                       name="servings"
+                       type="number"
+                       step="1"
+                       placeholder="1...2"
+                       value="<%= editable ? recipe.servings : "" %>"
+                       required
+                />
+            </div>
+            <ul class="text-lg space-y-2 pl-6" id="ingredient-container">
+                <% if (!editable) { %>
+                    <li class="relative px-8"
+                        data-ingredient>
+                        <span class="absolute w-5 text-2xl aspect-square rounded-full top-1/5 -left-3">🍔</span>
+                        <label class="font-bold space-x-3">
+                            <input class="w-24 text-center py-1  focus:outline-none border-b focus:border-amber-600 focus:border-b-2 transition-colors"
+                                   type="number"
+                                   placeholder="1..3"
+                                   name="ingredientQuantityNum"
+                                   value="2"
+                                   required
+                            />
+                            <input class="w-20 text-center py-1 px-2 focus:outline-none border-b focus:border-amber-600 focus:border-b-2 transition-colors"
+                                   type="text"
+                                   placeholder="g/tbsp"
+                                   name="ingredientQuantitySuffix"
+                                   value="g"
+                                   required
+                            />
+                        </label>
+                        <input class="ml-4 text-center py-1  focus:outline-none border-b focus:border-amber-600 focus:border-b-2 transition-colors"
+                               type="text"
+                               placeholder="Ingredient name"
+                               name="ingredientName"
+                               value="Salt"
+                               required />
+                    </li>
+                <% } %>
+            </ul>
+            <div class="text-center">
+                <button class="rounded-full mx-auto bg-[rgb(188,108,37)] py-2 px-6 font-small-heading font-[550] text-lg text-white"
+                        type="button"
+                        data-add-ingredient>
+                    Add Ingredient
+                </button>
+            </div>
+        </div>
+
+        <!-- Nutrition Portion of your recipe -->
+        <div class="space-y-12">
+            <h1 class="text-4xl font-bold">Nutrition per Serving</h1>
+            <ul class="space-y-8">
+                <li>
+                    <input type="text"
+                           id="calorie"
+                           name="calorie"
+                           autocomplete="off"
+                           placeholder="Calories"
+                           class="w-full py-1 focus:outline-none border-b focus:border-amber-600 focus:border-b-2 transition-colors"
+                    />
+                </li>
+                <li>
+                    <input type="text"
+                           id="protein"
+                           name="protein"
+                           autocomplete="off"
+                           placeholder="Protein"
+                           class="w-full py-1 focus:outline-none border-b focus:border-amber-600 focus:border-b-2 transition-colors"
+                    />
+                </li>
+                <li>
+                    <input type="text"
+                           id="carb"
+                           name="carb"
+                           autocomplete="off"
+                           placeholder="Carbs"
+                           class="w-full py-1 focus:outline-none border-b focus:border-amber-600 focus:border-b-2 transition-colors"
+                    />
+                </li>
+                <li>
+                    <input type="text"
+                           id="fat"
+                           name="fat"
+                           autocomplete="off"
+                           placeholder="Fat"
+                           class="w-full py-1 focus:outline-none border-b focus:border-amber-600 focus:border-b-2 transition-colors"
+                    />
+                </li>
+            </ul>
+        </div>
+
+        <!-- Directions of recipe -->
+        <div class="col-span-2 w-full space-y-8 px-40">
+            <h1 class="text-5xl font-bold">Directions of Recipe</h1>
+            <ol id="direc-container" class="font-body text-gray-900 text-base space-y-4">
+                <% if (!editable) { %>
+                    <li style="counter-increment: li">
+                        <div class="space-y-1 flex flex-col">
+                            <label for="a" class="text-amber-600 text-xl">
+                                Step <span
+                                        class="relative ml-3 before:text-2xl before:font-bold before:content-[counter(li)] before:absolute before:inset-0 before:-translate-y-1.5 before:w-full before:h-full"></span>
+                            </label>
+                            <label class="rounded-lg">
+                            <textarea name="steps"
+                                      class="w-full py-1 h-10 focus:outline-none border-b focus:border-amber-600 focus:border-b-2 transition-colors text-xl"
+                                      placeholder="Heat Some Water"
+                                      required
+                                      autocomplete="off"
+                            ></textarea>
+                            </label>
+                        </div>
+                    </li>
+                <% } %>
+            </ol>
+            <div class="text-center">
+                <button class="rounded-full mx-auto bg-[rgb(188,108,37)] py-2 px-6 font-small-heading font-[550] text-lg text-white"
+                        type="button"
+                        data-direction>
+                    Add Direction
+                </button>
+            </div>
+        </div>
+
+        <!-- Notes of the recipe -->
+        <div class="col-span-2 w-full flex gap-10 items-center">
+            <h1 class="text-xl">Notes (optional)</h1>
+            <label class="flex-1">
+                 <textarea id="notes"
+                           class="border-b py-1 w-full h-10 focus:outline-none focus:border-amber-600 focus:border-b-2 transition-colors text-xl"
+                           name="notes"
+                           placeholder="Some intricacies of your recipe..."
+                           autocomplete="off"
+                 ><%= editable ? recipe.notes : "" %></textarea>
+            </label>
+        </div>
+
+        <div class="col-span-2">
+            <%- include("../../../components/UI/Button", { id: "", type: "s", text: `${editable ? "Update Recipe" : "Post your Recipe"}` }) -%>
+        </div>
+    </form>
+</main>
+<%- include("../../../components/Layout/Footer") -%>
+
+<script>
+	// javascript or jquery code for the page dynamic and validation code
+
+	// Timings section
+	function onlyLetUserTypeNumber(ev) {
+		// Get the character code from the event
+		const charCode = (ev.which) ? ev.which : ev.keyCode;
+
+		// Allow only digits
+		if (charCode > 31 && (charCode < 48 || charCode > 57)) {
+			ev.preventDefault();
+		}
+	}
+
+	$("#prepTime").on("keypress", onlyLetUserTypeNumber);
+	$("#cookTime").on("keypress", onlyLetUserTypeNumber);
+
+	// Tags section
+	function tagHTML(text, id) {
+		return `<div class="rounded-full bg-selected-mehandi text-white font-body relative grid place-content-center" id="${
+			id ? id : ""
+		}">
+			<p class="capitalize px-3 py-2" data-tag="${text}">${text}</p>
+            <input type="text" value="${text}" name="tags" class="hidden" tabindex="0"/>
+			<!-- onlclick removes the tag from the document -->
+			<button class="absolute -right-1 -top-1" type="button" onclick="(function (elem) { $(elem).parent('div').remove();})(this)">
+				<div class="rounded-full bg-gray-900 p-2">
+					<svg class="w-1.5 fill-white"
+						 xmlns="http://www.w3.org/2000/svg"
+						 viewBox="0 0 384 512">
+						<path d="M376.6 84.5c11.3-13.6 9.5-33.8-4.1-45.1s-33.8-9.5-45.1 4.1L192 206 56.6 43.5C45.3 29.9 25.1 28.1 11.5 39.4S-3.9 70.9 7.4 84.5L150.3 256 7.4 427.5c-11.3 13.6-9.5 33.8 4.1 45.1s33.8 9.5 45.1-4.1L192 306 327.4 468.5c11.3 13.6 31.5 15.4 45.1 4.1s15.4-31.5 4.1-45.1L233.7 256 376.6 84.5z" />
+					</svg>
+				</div>
+			</button>
+    	</div>`;
+	}
+
+	// whenever a space is pressed, make it a tag
+	$("#tags").keydown(function(ev) {
+		if (ev.which !== 32) return;
+		ev.preventDefault();
+
+		const text = $(this).val();
+		$("#tag-container").append(tagHTML(text));
+		$(this).val("");
+	});
+
+	// ingredient section
+	const listEmojis = [
+		"🍔",
+		"🍟",
+		"🍕",
+		"🌭",
+		"🍗",
+		"🍖",
+		"🍝",
+		"🍜",
+		"🍲",
+		"🍛",
+		"🍱",
+		"🍚",
+		"🍘",
+		"🍙",
+		"🍢",
+		"🍣",
+		"🍤",
+		"🍥",
+		"🥮",
+		"🥟",
+		"🥠",
+		"🥡",
+		"🍦",
+		"🍧",
+		"🍨",
+		"🍩",
+		"🍪",
+		"🎂",
+		"🍰",
+		"🧁",
+		"🥧",
+		"🍫",
+		"🍬",
+		"🍭",
+		"🍮",
+		"🍯",
+		"🍼",
+		"🥛",
+		"🍵",
+		"🍶",
+		"🍾",
+		"🍷",
+		"🍸",
+		"🍹",
+		"🍺",
+		"🍻",
+		"🥂",
+		"🥃",
+		"🍴",
+		"🍽",
+		"️",
+		"🥄",
+		"🥐",
+		"🥖",
+		"🥨",
+		"🥞",
+		"🧇",
+		"🧀",
+		"🥓",
+		"🥩",
+		"🌮",
+		"🌯",
+		"🥙",
+		"🍠",
+		"🥔",
+		"🥕",
+		"🌽",
+		"🥦",
+		"🥬",
+		"🥒",
+		"🥑",
+		"🍅",
+		"🍆",
+		"🥯",
+		"🍞",
+		"🥪",
+		"🍡"
+	];
+
+	function ingredientHTML(name, quantityNum, quantitySuffix) {
+		const randomEmoji = getRandom(listEmojis);
+		return `
+			<li class="relative px-8"
+				data-ingredient>
+					<span class="absolute w-5 text-2xl aspect-square rounded-full top-1/5 -left-3">${randomEmoji}</span>
+                    <label class="font-bold space-x-3">
+                        <input class="w-24 text-center py-1 px-4 focus:outline-none border-b focus:border-amber-600 focus:border-b-2 transition-colors"
+                               type="number"
+                               placeholder="1..3"
+                               name="ingredientQuantityNum"
+							   onkeydown="onlyLetUserTypeNumber(this)"
+                                value="${quantityNum ? quantityNum : ""}"
+                        />
+                        <input class="w-20 text-center py-1 px-2 focus:outline-none border-b focus:border-amber-600 focus:border-b-2 transition-colors"
+                               type="text"
+                               placeholder="g/tbsp"
+                               name="ingredientQuantitySuffix"
+                                value="${quantitySuffix ? quantitySuffix : ""}"
+                        />
+                    </label>
+                    <input class="ml-4 text-center py-1 px-4 focus:outline-none border-b focus:border-amber-600 focus:border-b-2 transition-colors"
+                           type="text"
+                           placeholder="Ingredient name"
+                           name="ingredientName"
+                           value="${name ? name : ""}"
+                    />
+			</li>
+	`;
+	}
+
+	$("[data-add-ingredient]").click(function() {
+		$("#ingredient-container").append(ingredientHTML());
+	});
+	$("#servings").keydown(onlyLetUserTypeNumber);
+	$(`[name='ingredientQuantityNum']`).keydown(onlyLetUserTypeNumber);
+
+	// nutrition section
+	$("#calorie").keydown(onlyLetUserTypeNumber);
+	$("#protein").keydown(onlyLetUserTypeNumber);
+	$("#carb").keydown(onlyLetUserTypeNumber);
+	$("#fat").keydown(onlyLetUserTypeNumber);
+
+
+	// direction step
+	function directionHTML(stepVal) {
+		return `
+			<li style="counter-increment: li">
+                    <div class="space-y-1 flex flex-col">
+                        <label for="a" class="text-amber-600 text-xl">
+                            Step <span
+                                    class="relative ml-3 before:text-2xl before:font-bold before:content-[counter(li)] before:absolute before:inset-0 before:-translate-y-1.5 before:w-full before:h-full"></span>
+                        </label>
+                        <label class="rounded-lg">
+                            <textarea name="steps"
+                                      class="w-full py-1 h-10 focus:outline-none border-b focus:border-amber-600 focus:border-b-2 transition-colors text-xl"
+                                      placeholder="Heat Some Water"
+                            >${stepVal ? stepVal : ""}</textarea>
+                        </label>
+                    </div>
+			</li>
+		`;
+	}
+
+	$("[data-direction]").click(function() {
+		$("#direc-container").append(directionHTML());
+	});
+
+    <%# if editable only add this code %>
+    <% if (editable) { %>
+	const recipeID = "<%= recipe.id %>";
+	fetch(`/api/r/${recipeID}`).then(res => res.json()).then(
+		({ foundRecipe: recipe }) => {
+			console.log(recipe);
+			// add tags
+			recipe.tags.forEach(tag => $("#tag-container").append(tagHTML(tag)))
+
+			// add ingredients
+			recipe.ingredients.forEach(({
+											name,
+											quantity: { num, suffix }
+										}) => $("#ingredient-container").append(ingredientHTML(name, num, suffix)))
+
+			// add steps
+			recipe.steps.forEach(step => $("#direc-container").append(directionHTML(step)))
+		}
+	)
+
+    <% } %>
+
+
+	// utility functions
+	function getRandom(array) {
+		return array[Math.floor(Math.random() * array.length)];
+	}
+</script>
+</body>
+</html>

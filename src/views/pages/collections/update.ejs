@@ -1,0 +1,33 @@
+<%- include("../../components/UI/HeadIncluder", { titleOfPage: "Create Collection", linkJS: "" }) -%>
+<body>
+<%- include("../../components/Layout/Header", { user, dropdownOption: "Create Collection" }) -%>
+
+<main class="mt-20 space-y-20 pb-24 px-[10%]">
+    <h1 class="text-6xl font-bold font-heading tracking-tight text-center capitalize">
+        Update Your Collection ✏️ 📂
+    </h1>
+    <form action="#" method="POST" class="grid grid-cols-2 gap-x-40 gap-y-20 justify-items-center">
+        <div class="space-y-12 justify-self-end">
+            <%- include("../../components/UI/Input", { inpID: "title", placeholder: "Title of Collection", size: "lg" }) -%>
+            <%- include("../../components/UI/Textarea", { txtID: "desc", placeholder: "Description", size: "lg" }) -%>
+        </div>
+        <textarea name="image"
+                  id="image"
+                  class="justify-self-start rounded-full w-40 h-40 p-8 bg-white border-2 border-selected-mehandi focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-selected-mehandi placeholder:text-center"
+                  placeholder="Enter Your collection image's URL"></textarea>
+        <div class="col-span-2">
+            <%- include("../../components/UI/Button", { id: "", type: "s", text: "Update" }) -%>
+        </div>
+    </form>
+</main>
+
+<script>
+	// put the values in the input fields
+	$("#title").val("<%= title %>");
+	$("#desc").val("<%= desc %>");
+	$("#image").val("<%= image %>");
+</script>
+
+<%- include("../../components/Layout/Footer") -%>
+</body>
+</html>

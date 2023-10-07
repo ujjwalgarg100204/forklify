@@ -1,0 +1,14 @@
+<%- include("../../../components/UI/HeadIncluder", { titleOfPage: "My Saved Recipes" }) -%>
+<body class="font-body text-mehandi">
+<%- include("../../../components/Layout/Header", { user, dropdownOption: "Own recipes" }) -%>
+
+<main class="mt-20 pb-16 px-[10%] space-y-16">
+    <h1 class="text-6xl font-bold font-heading tracking-tight text-center capitalize">
+        Your Recipes 😋
+    </h1>
+
+    <%- include("../../../components/Recipe/Sliders/RecipeCardGridSlider", { recipes }) -%>
+</main>
+<%- include("../../../components/Layout/Footer") -%>
+</body>
+</html>

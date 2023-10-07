@@ -1,0 +1,13 @@
+<button
+        id="<%= id; %>"
+        class="rounded-lg bg-[rgb(188,108,37)] p-4 px-16 font-small-heading font-[550] text-lg text-white"
+<% if (type === "b") { %>
+        type="button"
+<% } else if (type === "s") { %>
+        type="submit"
+<% } else { %>
+        type="reset"
+        <% } %>
+>
+    <%= text; %>
+</button>

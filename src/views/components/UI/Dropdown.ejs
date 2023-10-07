@@ -1,0 +1,151 @@
+<div class="dropdown relative inline-block">
+    <button
+            class="dropdown-toggle flex gap-2 py-3 px-5 bg-selected-mehandi cursor-pointer transition ease-in-out duration-300 rounded-lg border-selected-mehandi text-white text-base hover:bg-[hsl(73,42%,22%)]"
+            data-dd-target="first"
+    >
+        <%= selected; %>
+        <%- include("../Icons/UI/ArrowDown", { containerClass: "p-1 hover:bg-[hsl(73,42%,22%)] rounded-full", svgClass: "w-5 h-5" }) -%>
+    </button>
+    <div class="dropdown-menu absolute opacity-0 invisible transition duration-300 ease-in-out top-full left-0 rounded-lg bg-mehandi min-w-full py-3"
+         data-dd-path="first">
+        <% [
+            { category: "My good food", link: "/" },
+            { category: "Own recipes", link: "/u/recipes" },
+            { category: "My saved recipes", link: "/u/recipes/saved" },
+            { category: "Sign Out", link: "/auth/confirm-logout" }
+        ].filter(option => option.category !== selected).forEach(option => { %>
+            <a class="dropdown-menu__link border-none block w-full py-2 px-3 bg-transparent text-white text-center font-bold hover:bg-selected-mehandi"
+               href="<%= option.link %>">
+                <%= option.category %>
+            </a>
+        <% }); %>
+    </div>
+</div>
+<script>
+	(function dropdown() {
+		const triggers = document.querySelectorAll("[data-dd-target]");
+		let index = -1,
+			isOpened = !1,
+			focusedEl = "";
+
+		function toggleClass(element, className) {
+			if (element.classList.contains(className)) {
+				setTimeout(() => {
+					element.classList.remove(className);
+					isOpened = !1;
+				});
+			} else {
+				setTimeout(() => {
+					element.classList.add(className);
+					isOpened = !0;
+				});
+			}
+		}
+
+		function deleteActiveClassInArr(arr, className) {
+			for (let i = 0; i < arr.length; i++) {
+				arr[i].classList.remove(className);
+			}
+		}
+
+		function addActiveClassMenuEl(arr, className) {
+			deleteActiveClassInArr(arr, className);
+			arr[index].classList.add(className);
+		}
+
+		function closeMenu(menu, activeClass) {
+			index = -1;
+			isOpened = !1;
+			menu.classList.remove(activeClass);
+		}
+
+		triggers.forEach(trigger => {
+			const path = trigger.getAttribute("data-dd-target"),
+				menu = document.querySelector(`[data-dd-path="${path}"]`),
+				menuItems = menu.querySelectorAll(".dropdown-menu__link"),
+				lastItem = menuItems[menuItems.length - 1];
+			menuItems.forEach(item => {
+				item.addEventListener("focus", e => {
+					focusedEl = e.target;
+				});
+				item.addEventListener("keydown", e => {
+					if (e.code === "Enter" && e.target === focusedEl) {
+						closeMenu(menu, "dropdown-menu--active");
+					}
+					if (e.code === "Escape" && focusedEl) {
+						closeMenu(menu, "dropdown-menu--active");
+						trigger.focus();
+					}
+				});
+			});
+			document.addEventListener("click", e => {
+				const target = e.target;
+				if (target && target === trigger) {
+					e.preventDefault();
+					toggleClass(menu, "dropdown-menu--active");
+				}
+				if (
+					target &&
+					!(
+						target === menu ||
+						target.classList.contains("dropdown-menu__link")
+					)
+				) {
+					index = -1;
+					closeMenu(menu, "dropdown-menu--active");
+					deleteActiveClassInArr(
+						menuItems,
+						"dropdown-menu__link--active"
+					);
+				}
+			});
+			lastItem.addEventListener("blur", () => {
+				closeMenu(menu, "dropdown-menu--active");
+			});
+			trigger.addEventListener("keydown", e => {
+				if (e.code === "Escape") {
+					closeMenu(menu, "dropdown-menu--active");
+					deleteActiveClassInArr(
+						menuItems,
+						"dropdown-menu__link--active"
+					);
+				}
+				if (isOpened && menuItems.length > 0) {
+					switch (e.code) {
+						case "ArrowUp":
+							index--;
+							if (index < 0) {
+								index = menuItems.length - 1;
+							}
+							addActiveClassMenuEl(
+								menuItems,
+								"dropdown-menu__link--active"
+							);
+							break;
+						case "ArrowDown":
+							index++;
+							if (index > menuItems.length - 1) {
+								index = 0;
+							}
+							addActiveClassMenuEl(
+								menuItems,
+								"dropdown-menu__link--active"
+							);
+							break;
+						case "Enter":
+							deleteActiveClassInArr(
+								menuItems,
+								"dropdown-menu__link--active"
+							);
+							if (index > -1) {
+								menuItems[index].click();
+							}
+							break;
+					}
+				}
+			});
+		});
+	})();
+
+</script>
+

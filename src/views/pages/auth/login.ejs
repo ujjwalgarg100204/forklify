@@ -1,0 +1,47 @@
+<%- include("../../components/UI/HeadIncluder", {titleOfPage: "Login", linkJS: ""}) -%>
+<body class="font-heading space-y-20 bg-[#e6e6e6]">
+<%- include("../../components/Layout/Header", { user, dropdownOption: "Login" }) -%>
+
+<!-- Login Component -->
+<main class="text-center text-black mx-auto w-1/2 bg-white py-20 px-52 rounded-3xl border border-orange-300 font-[550] space-y-16">
+    <h1 class="text-5xl font-small-heading">Sign In</h1>
+
+    <ul class="space-y-8 font-heading font-normal text-xl">
+        <li><a href="/auth/google"
+               class="flex justify-between bg-white border border-gray-800 p-3 px-7 rounded-full items-center drop-shadow-sm"
+            >
+                <img class="w-10 p-1"
+                     src="/images/icons/socials/google.png"
+                     alt="google"
+                />
+                <span class="flex-1">Continue with Google</span>
+            </a></li
+        >
+        <li>
+            <a href="/auth/github"
+               class="flex justify-between text-white p-3 px-7 rounded-full items-center drop-shadow-sm bg-black"
+            >
+                <img class="w-10 m-0.5 bg-white rounded-lg"
+                     src="/images/icons/socials/github.png"
+                     alt="github"
+                />
+                <span class="flex-1">Continue with GitHub</span>
+            </a>
+        </li>
+        <li>
+            <a href="/auth/linkedin"
+               class="flex justify-between bg-[#0B78B7] p-3 px-7 rounded-full items-center text-white drop-shadow-sm"
+            >
+                <img class="w-10"
+                     src="/images/icons/socials/linkedin.png"
+                     alt="linkedin"
+                />
+                <span class="flex-1">Continue with LinkedIn</span>
+            </a>
+        </li>
+    </ul>
+</main>
+
+<%- include("../../components/Layout/Footer") -%>
+</body>
+</html>

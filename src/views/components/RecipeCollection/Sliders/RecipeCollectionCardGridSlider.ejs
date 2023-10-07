@@ -1,0 +1,41 @@
+<div class="relative flex items-center">
+    <div id="grid-prev-btn" class="swiper-button-prev"></div>
+
+    <div class="swiper" id="grid-slider">
+        <div class="swiper-wrapper">
+            <% collections.forEach(collection => { %>
+                <%- include("../RecipeCollectionCard", { collection }) -%>
+            <% }); %>
+        </div>
+        <div class="swiper-pagination"></div>
+    </div>
+
+    <div id="grid-next-btn" class="swiper-button-next"></div>
+</div>
+
+<!-- Swiper JS -->
+<script src="https://cdn.jsdelivr.net/npm/swiper@9/swiper-bundle.min.js"></script>
+
+<!-- Initialize Swiper -->
+<script>
+	new Swiper("#grid-slider", {
+		slidesPerView: 2,
+		grid: {
+			rows: 2,
+			fill: "row"
+		},
+		spaceBetween: 50,
+		clickable: true,
+		keyboard: {
+			enabled: true
+		},
+		navigation: {
+			prevEl: "#grid-prev-btn",
+			nextEl: "#grid-next-btn",
+		},
+		pagination: {
+			el: ".swiper-pagination",
+			clickable: true,
+		},
+	});
+</script>

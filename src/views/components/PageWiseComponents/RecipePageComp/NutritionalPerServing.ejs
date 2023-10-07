@@ -1,0 +1,23 @@
+<div class="space-y-5">
+    <h1 class="font-heading font-[550] text-gray-900 text-5xl">
+        Nutrition per serving
+    </h1>
+    <div class="flex justify-start">
+        <div class="flex flex-col justify-between items-center font-[500] tracking-wider h-[4rem] pr-8">
+            <h4 class="font-small-heading text-lg">Calories</h4>
+            <p class="text-amber-600 font-body"><%= recipe.nutrition?.calories || 1; %></p>
+        </div>
+        <div class="flex flex-col justify-between items-center font-[500] tracking-wider h-[4rem] px-8 border-l border-amber-400">
+            <h4 class="font-small-heading text-lg">Protein</h4>
+            <p class="text-amber-600 font-body"><%= recipe.nutrition?.protein || 1; %> g</p>
+        </div>
+        <div class="flex flex-col justify-between items-center font-[500] tracking-wider h-[4rem] px-8 border-l border-amber-400">
+            <h4 class="font-small-heading text-lg">Carb</h4>
+            <p class="text-amber-600 font-body"><%= recipe.nutrition?.carb || 1; %> g</p>
+        </div>
+        <div class="flex flex-col justify-between items-center font-[500] tracking-wider h-[4rem] px-8 border-l border-amber-400">
+            <h4 class="font-small-heading text-lg">Fat</h4>
+            <p class="text-amber-600 font-body"><%= recipe.nutrition?.fat || 1; %> g</p>
+        </div>
+    </div>
+</div>

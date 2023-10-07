@@ -1,0 +1,29 @@
+<div id="swiper-button-prev" class="swiper-button-prev" data-prev></div>
+<!-- Swiper -->
+<div class="swiper" id="recipeCollectionSlider">
+    <div class="swiper-wrapper">
+        <% collections.forEach(collection => { %>
+            <%- include("../RecipeCollectionCard", { collection }) -%>
+        <% }); %>
+    </div>
+</div>
+<div id="swiper-button-next" class="swiper-button-next" data-next></div>
+
+<!-- Swiper JS -->
+<script src="https://cdn.jsdelivr.net/npm/swiper@9/swiper-bundle.min.js"></script>
+
+<!-- Initialize Swiper -->
+<script>
+	new Swiper("#recipeCollectionSlider", {
+		slidesPerView: "auto",
+		spaceBetween: 20,
+		loop: true,
+		keyboard: {
+			enabled: true
+		},
+		navigation: {
+			prevEl: "#swiper-button-prev",
+			nextEl: "#swiper-button-next",
+		},
+	});
+</script>

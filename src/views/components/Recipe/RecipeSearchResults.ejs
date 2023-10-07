@@ -1,0 +1,39 @@
+<div class="relative flex items-center">
+    <div id="search-prev-btn" class="swiper-button-prev" data-prev></div>
+
+    <div class="swiper" id="search-slider">
+        <div class="swiper-wrapper">
+            <% recipes.forEach(recipe => { %>
+                <%- include("./RecipeCard", { recipe }) -%>
+            <% }); %>
+        </div>
+        <div class="swiper-pagination"></div>
+    </div>
+    <div id="search-next-btn" class="swiper-button-next" data-next></div>
+</div>
+
+<!-- Swiper JS -->
+<script src="https://cdn.jsdelivr.net/npm/swiper@9/swiper-bundle.min.js"></script>
+
+<!-- Initialize Swiper -->
+<script>
+	new Swiper("#search-slider", {
+		slidesPerView: 3,
+		grid: {
+			rows: 2,
+			fill: "row",
+		},
+		spaceBetween: 50,
+		keyboard: {
+			enabled: true
+		},
+		navigation: {
+			prevEl: "#search-prev-btn",
+			nextEl: "#search-next-btn",
+		},
+		pagination: {
+			el: ".swiper-pagination",
+			type: "fraction",
+		},
+	})
+</script>

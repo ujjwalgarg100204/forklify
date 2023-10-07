@@ -1,0 +1,14 @@
+<%- include("../../components/UI/HeadIncluder", { titleOfPage: "Browse Collection", linkJS: "" }) -%>
+<body>
+<%- include("../../components/Layout/Header", { user, dropdownOption: "Browse Collection" }) -%>
+
+<main class="mt-20 space-y-20 pb-24 px-[10%]">
+    <h1 class="text-6xl font-bold font-heading tracking-tight text-center capitalize">
+        Browse Recipe Collections 🍲
+    </h1>
+    <%- include( "../../components/RecipeCollection/Sliders/RecipeCollectionCardGridSlider", { collections }) -%>
+</main>
+
+<%- include("../../components/Layout/Footer") -%>
+</body>
+</html>

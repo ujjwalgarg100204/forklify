@@ -1,0 +1,22 @@
+<div class="relative">
+    <textarea id="<%= txtID; %>"
+              class="border-b py-1 w-full h-10 focus:outline-none focus:border-selected-mehandi focus:border-b-2 transition-colors peer <%= size === "lg" ? "text-xl" : "text-base" %>"
+              name="<%= txtID; %>"
+    ></textarea>
+    <label for="<%= txtID; %>"
+           class="absolute left-0 top-1 text-gray-600  cursor-text peer-focus:text-selected-mehandi transition-all <%= size === "lg" ? "text-lg peer-focus:-top-7 peer-focus:text-base" : "text-base peer-focus:text-xs peer-focus:-top-4"; %>">
+        <%= placeholder; %>
+    </label>
+</div>
+
+<script>
+	$("#<%= txtID; %>").blur(function() {
+		if ($(this).val()) {
+			$(this).addClass("border-selected-mehandi border-b-2");
+			$(this).siblings().addClass("text-selected-mehandi  <%= size === "lg" ? "text-base -top-6" : "text-xs -top-4"; %>");
+		} else {
+			$(this).removeClass("border-selected-mehandi border-b-2");
+			$(this).siblings().removeClass("text-selected-mehandi <%= size === "lg" ? "text-base -top-6" : "text-xs -top-4"; %>");
+		}
+	});
+</script>

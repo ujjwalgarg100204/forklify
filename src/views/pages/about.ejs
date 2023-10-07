@@ -1,0 +1,56 @@
+<%- include("../components/UI/HeadIncluder", { titleOfPage: "About Us", linkJS: "" }) -%>
+<body class="font-heading space-y-20 bg-[#e6e6e6]">
+<%- include("../components/Layout/Header", { user, dropdownOption: "About Us" }) -%>
+
+<main class="mx-auto w-3/4 px-20 bg-white py-16 rounded-lg space-y-12">
+    <h1 class="font-heading font-bold text-5xl">About Us</h1>
+
+    <!-- About Us text -->
+    <section class="space-y-4">
+        <p>
+            Welcome to Forklify, the ultimate online community for food lovers and home cooks!
+        </p>
+        <p>
+            Our website is dedicated to sharing delicious recipes, cooking tips, and culinary
+            inspiration with like-minded individuals around the world. At Forklify, we believe that food is more
+            than just fuel for our bodies. Food brings people together, sparks creativity, and nourishes the
+            soul. That's why we're passionate about creating a platform where food lovers from all walks of life
+            can come together to share their love of cooking and eating.So come join us at Forklify and
+            start exploring our collection of delicious recipes, engaging with other foodies, and taking your
+            culinary skills to the next level. We can't wait to see what you cook up!
+        </p>
+    </section>
+
+    <!-- Developer's Profile Card List -->
+    <section class="space-y-12">
+        <h1 class="font-heading font-bold text-4xl">Meet The Team</h1>
+        <ul class="flex justify-evenly gap-4">
+            <!-- Profile Card component -->
+            <% profiles.forEach(profile => { %>
+                <li class="space-y-5 text-center max-w-[20rem] shadow-xl p-10 rounded-xl transition-all hover:scale-105 hover:shadow-2xl hover:bg-[hsl(73,42%,97%)]">
+                    <img class="rounded-full w-52 h-52 mx-auto object-center object-cover"
+                         src="<%= profile.imagePath ;%>"
+                         alt="<%= profile.name ;%> picture" />
+                    <h3 class="font-small-heading font-[550] text-2xl"><%= profile.name ;%></h3>
+                    <p class="col-span-2 text-center text-base"><%= profile.desc ;%></p>
+                    <ul class="flex justify-evenly">
+                        <% ["github", "instagram", "linkedin"].forEach(social => { %>
+                            <li class="group">
+                                <a href="<%= profile.socials[social] ;%>">
+                                    <img class="w-8 h-8 hover:scale-110 transition"
+                                         src="/images/icons/socials/<%= social ;%>.png"
+                                         alt="<%= social ;%> link"
+                                         title="<%= social.charAt(0).toUpperCase() + social.slice(1) ;%> Profile" />
+                                </a>
+                            </li>
+                        <% }); %>
+                    </ul>
+                </li>
+            <% }); %>
+        </ul>
+    </section>
+</main>
+
+<%- include("../components/Layout/Footer") -%>
+</body>
+</html>

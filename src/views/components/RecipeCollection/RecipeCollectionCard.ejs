@@ -1,0 +1,62 @@
+<div class="swiper-slide shadow-lg p-8 w-fit max-w-[40rem] bg-white cursor-pointer hover:shadow-2xl hover:bg-[hsl(73,42%,97.5%)] hover:scale-110 transition duration-300 group"
+     title="<%= collection.title; %>"
+     data-id="<%= collection._id %>">
+    <div class="flex gap-10 w-fit">
+        <img class="object-cover p-3 object-center rounded-full aspect-square max-w-[14rem]"
+             src="<%= collection.image; %>"
+             alt="<%= collection.title; %>" />
+
+        <div class="space-y-8">
+            <div class="space-y-4">
+                <h2 class="font-bold font-heading text-4xl"><%= collection.title; %></h2>
+                <p class="max-w-[20rem] max-h-[7rem] overflow-y-scroll font-body text-lg leading-6 text-black"
+                   data-desc>
+                    <%= collection.desc; %>
+                </p>
+            </div>
+
+            <div class="flex justify-between items-center tracking-wider gap-12">
+                <p class="w-fit flex items-center gap-2">
+                    <span class="font-heading font-bold text-2xl underline text-amber-600"><%= collection.recipes.length; %></span>
+                    Recipes
+                </p>
+                <div class="flex gap-3 items-center">
+                    <%- include("../../components/Icons/UI/Actions/PlusWithNoCircle" , { containerClass: "bg-amber-600 p-1.5 rounded-full w-7 h-7", svgClass: "w-full h-full stroke-white" }) -%>
+                    <p><%= collection.createdAt.toLocaleDateString("en-US", { year: "numeric", month: "long" }); %></p>
+                </div>
+            </div>
+        </div>
+    </div>
+
+
+    <div class="opacity-0 flex flex-col gap-4 absolute -right-4 -top-4 transition duration-300 group-hover:opacity-100">
+        <!-- Additional Actions -->
+        <button class="hover:scale-110 transition group/icon" title="Edit Collection" data-edit-collection="">
+            <%- include("../../components/Icons/UI/Actions/Edit" , { containerClass: "bg-amber-600 p-3 rounded-full w-12 h-12 group-hover/icon:bg-amber-500", svgClass: "w-full h-full stroke-white" }) -%>
+        </button>
+        <button class="hover:scale-110 transition group/icon" title="Delete Collection" data-delete-collection="">
+            <%- include("../../components/Icons/UI/Actions/Trash" , { containerClass: "bg-amber-600 p-3 rounded-full w-12 h-12 group-hover/icon:bg-amber-500", svgClass: "w-full h-full stroke-white" }) -%>
+        </button>
+    </div>
+</div>
+
+<script>
+	document.querySelector("[data-id='<%= collection._id; %>']").addEventListener("click", function(ev) {
+		// check which button was clicked
+		const editButton = ev.target.closest("[data-edit-collection]");
+		const deleteButton = ev.target.closest("[data-delete-collection]");
+		console.log(editButton)
+		console.log(ev.target);
+		if (editButton) {
+			// go to edit page of recipe
+			location.href = `/u/collections/edit/<%= collection._id %>`
+
+		} else if (deleteButton) {
+			// go to delete page of recipe
+			location.href = `/u/collections/delete/<%= collection._id %>`;
+		} else {
+			// redirect to recipe page
+			location.href = '/c/<%= collection._id; %>'
+		}
+	});
+</script>

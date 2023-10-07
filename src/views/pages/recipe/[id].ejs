@@ -1,0 +1,41 @@
+<%- include("../../components/UI/HeadIncluder", { titleOfPage: recipe.title, linkJS: "" }) -%>
+<body>
+<%- include("../../components/Layout/Header", { user, dropdownOption: "Recipe" }) -%>
+
+<main class="space-y-16 mb-28">
+    <div class="bg-cover bg-center flex flex-col justify-between px-[10%] py-16 gap-28"
+         style="background-image: url('<%= recipe.image; %>')">
+        <%- include("../../components/Icons/UI/ArrowLeft", { containerClass: "hover:bg-[rgba(255,255,255,0.5)] rounded-full p-2 w-fit", svgClass: "w-8 stroke-2" }) -%>
+        <%- include("../../components/PageWiseComponents/RecipePageComp/HeadingCard", { ...recipe }) -%>
+    </div>
+
+    <section class="px-[10%] space-y-12">
+        <%- include("../../components/PageWiseComponents/RecipePageComp/Tags", { ...recipe }) -%>
+
+        <div class="flex justify-between">
+            <div class="flex flex-col gap-12">
+                <%- include("../../components/PageWiseComponents/RecipePageComp/Ingredient", { ...recipe }) -%>
+
+                <%- include("../../components/PageWiseComponents/RecipePageComp/NutritionalPerServing", { recipe }) -%>
+            </div>
+            <%- include("../../components/PageWiseComponents/RecipePageComp/Directions", { ...recipe }) -%>
+        </div>
+    </section>
+
+    <hr class="border-2 border-gray-100" />
+    <section class="px-[10%] space-y-8">
+        <%- include("../../components/PageWiseComponents/RecipePageComp/RatingAndComment", { ...recipe }) -%>
+    </section>
+    <hr class="border-2 border-gray-100" />
+
+    <section class="px-[10%] space-y-12">
+        <h1 class="font-heading font-[550] text-gray-900 text-3xl">More interesting recipes:</h1>
+        <div class="relative flex gap-10 items-center">
+            <%- include("../../components/Recipe/Sliders/RecipeCardSlider", { name: "interesting", recipes: recommendedRecipes }) -%>
+        </div>
+    </section>
+</main>
+
+<%- include("../../components/Layout/Footer") -%>
+</body>
+</html>

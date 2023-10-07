@@ -1,0 +1,122 @@
+<%- include("../components/UI/HeadIncluder", { titleOfPage: "Forklify" }) -%>
+<body class="space-y-20 text-[rgb(40,54,24)] font-body">
+
+<!-- Header Section -->
+<header class="relative h-screen px-12 py-5 text-white" id="top">
+    <div class="absolute inset-0 z-0 h-full w-full bg-cover bg-center bg-no-repeat"
+         style="background-image: url('/images/background/indian-dhal-spicy-curry-bowl-spices-herbs-rustic-black-wooden-table.jpg');">
+    </div>
+
+    <!-- Navbar -->
+    <nav class="z-1 relative flex h-fit w-full items-center justify-between font-body">
+        <a href="/" class="bg-[rgba(0,0,0,0.3)] rounded-full p-4">
+            <img class="w-80" src="/images/icons/brand/brand.png" alt="brand">
+        </a>
+        <ul class="text-md flex gap-16 font-bold">
+            <li class="bg-[rgba(0,0,0,0.3)] rounded-lg grid p-3 place-content-center">
+                <a href="/about">About us</a>
+            </li>
+            <li class="bg-[rgba(0,0,0,0.3)] rounded-lg grid p-3 place-content-center">
+                <a href="#explore-recipes">Explore recipes</a>
+            </li>
+            <li class="bg-[rgba(0,0,0,0.3)] rounded-lg grid p-3 place-content-center">
+                <a href="/r/popular">Popular recipes</a>
+            </li>
+            <% if (user) { %>
+                <li>
+                    <%- include("../components/UI/Dropdown", { selected: "My good food" }) -%>
+                </li>
+            <% } else { %>
+                <li class="rounded-full bg-[rgb(96,107,55)] p-2 px-8 grid place-content-center">
+                    <a href="/auth/login">Sign In / Register</a>
+                </li>
+            <% } %>
+        </ul>
+    </nav>
+
+    <h1 class="z-1 relative mt-32 w-2/5 rounded-lg font-heading text-7xl font-bold">
+        Stop waisting your <br />
+        <span class="text-[#F05D23]">time</span> while thinking <br />
+        what
+        <span class="text-[#F05D23]">to cook...</span>
+    </h1>
+
+    <p class="z-1 relative mt-6 text-3xl font-thin">
+        Find Your perfect dish and cook it <br />
+        simply and quickly!
+    </p>
+
+    <div class="z-1 relative mt-12">
+        <%- include("../components/UI/Button", { text: "Find Recipes", type: "b", id: "btn-find-recipe" }) -%>
+    </div>
+</header>
+
+<!-- How It Works Section -->
+<section class="space-y-24 text-center" id="how-it-works">
+    <h1 class="font-heading text-6xl font-bold tracking-tight">
+        How it works <span class="font-normal">?</span>
+    </h1>
+
+    <ul class="flex justify-evenly">
+        <% howItWorks.forEach(({ title, text }) => { %>
+            <li class="relative max-w-xs space-y-4 before:absolute before:inset-0 before:h-full before:w-full before:-translate-y-32 before:text-[15vw] before:font-bold before:text-[rgba(0,0,0,0.05)] before:content-[counter(li,decimal-leading-zero)]"
+                style="counter-increment: li">
+                <h3 class="text-2xl font-bold font-heading"><%= title; %></h3>
+                <p><%= text %></p>
+            </li>
+        <% }) %>
+    </ul>
+
+    <%- include("../components/UI/Button", { text: "Find Recipes", type: "b", id: "btn-find-recipe2" }) -%>
+</section>
+
+<!-- Explore Recipes Section -->
+<section id="explore-recipes"
+         class="bg-cover py-20 text-center text-white "
+         style="background-image: url('/images/food/chicken-skewers-with-slices-sweet-peppers-dill.jpg');">
+    <h1 class="font-heading text-7xl font-bold">Explore Recipes</h1>
+    <p class="mt-6 text-xl">
+        Search recipe by pasting the name of the ingredient
+    </p>
+
+    <!-- Search bar -->
+    <div class="mx-auto mt-20 max-w-[50%] shadow-2xl">
+        <%- include("../components/UI/SearchBar") -%>
+    </div>
+</section>
+
+<!-- Categories of Recipes Section -->
+<section class="text-center space-y-7 px-20">
+    <h1 class="text-7xl font-bold font-heading">Categories</h1>
+    <p class="text-xl">A large selection of dishes for cooking</p>
+    <div class="flex gap-16 justify-center pt-4">
+        <% categoriesWithIcons.forEach(({ svg, category }) => { %>
+            <a class="relative flex flex-col gap-4 items-center justify-center hover:scale-110 hover:justify-start transition-all group"
+               href="/r/#<%= category %>">
+                <%- include(`../components/Icons/Food/${svg}`, { containerClass: "w-28 h-28 rounded-full p-7 bg-[rgb(188,108,37)] shadow-[inset_-5px_5px_5px_rgba(255,255,255,0.5)] relative before:absolute before:w-full before:h-full before:-z-1 before:shadow-2xl before:rounded-full before:inset-0 group-hover:before:hidden", svgClass:"fill-white h-full w-full group-hover:hidden" }) -%>
+                <span class="font-body capitalize font-[550] transition-all duration-300 group-hover:absolute group-hover:top-[28%] group-hover:text-xl group-hover:font-bold group-hover:text-white">
+                <%= category; %>
+            </span>
+            </a>
+        <% }); %>
+    </div>
+</section>
+
+<!-- Recommended Recipes Carousel Section -->
+<section class="text-center space-y-16">
+    <h1 class="text-7xl font-bold tracking-tight font-heading">Recommendations</h1>
+    <div class="px-48">
+        <%- include("../components/Recipe/Sliders/RecipeSuggestionCardSlider", { recipes: recommendedRecipes }) -%>
+    </div>
+</section>
+
+<%- include("../components/Layout/Footer") -%>
+
+<script>
+	const exploreRecipeElem = document.querySelector("#explore-recipes");
+	$("#btn-find-recipe").click(() => exploreRecipeElem.scrollIntoView());
+	$("#btn-find-recipe2").click(() => exploreRecipeElem.scrollIntoView());
+</script>
+
+</body>
+</html>

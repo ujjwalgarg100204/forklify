@@ -1,0 +1,18 @@
+<a class="swiper-slide hover:scale-110 transition-all" data-id="<%= recipe.id; %>" href="/r/<%= recipe.id %>">
+    <div>
+        <div class="aspect-square bg-cover text-white bg-center  px-4 pb-5 flex items-end justify-between rounded-[2.5rem] text-sm"
+             style="background-image: url('<%= recipe.image; %>')">
+            <div class="flex justify-start gap-1 items-center rounded-full p-1 px-3 bg-[rgba(0,0,0,0.3)]"
+                 style="text-shadow: 1px 1px 3px #000">
+                <%- include("../Icons/Reactions/Heart", { containerClass: "h-5 w-5", svgClass: "h-full w-full fill-white drop-shadow-xl" }) -%>
+                <%= recipe.bookmarkCount; %>
+            </div>
+            <div class="flex justify-start gap-1 items-center rounded-full p-1 px-3 bg-[rgba(0,0,0,0.3)]"
+                 style="text-shadow: 1px 1px 3px #000;">
+                <%- include("../Icons/UI/Clock", { containerClass: "h-5 w-5", svgClass: "h-full w-full fill-white drop-shadow-xl" }) -%>
+                <%= recipe.totalCookTime %>
+            </div>
+        </div>
+        <p class="text-center max-h-[10rem] pb-10 overflow-y-scroll"><%= recipe.desc %></p>
+    </div>
+</a>

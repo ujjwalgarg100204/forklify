@@ -1,0 +1,42 @@
+<!DOCTYPE html>
+<html lang="en" class="scroll-smooth">
+<head>
+    <meta charset="UTF-8" />
+    <meta
+            name="viewport"
+            content="width=device-width, user-scalable=no, initial-scale=1.0, maximum-scale=1.0, minimum-scale=1.0"
+    />
+    <meta http-equiv="X-UA-Compatible" content="ie=edge" />
+    <title><%= titleOfPage; %></title>
+
+    <!-- linking favicon -->
+    <link rel="shortcut icon"
+          href="/images/icons/brand/favicon.png"
+          type="image/x-icon"
+    />
+
+    <!-- linking tailwindcss -->
+    <link rel="stylesheet" href="/styles/style.css" />
+
+    <!-- linking JQuery -->
+    <script src="https://code.jquery.com/jquery-3.6.4.slim.min.js"
+            integrity="sha256-a2yjHM4jnF9f54xUQakjZGaqYs/V1CYvWpoqZzC2/Bw="
+            crossorigin="anonymous"
+    ></script>
+
+    <!-- Link Swiper's CSS -->
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/swiper@9/swiper-bundle.min.css" />
+
+    <!-- js -->
+    <script>
+		// fixes scaling issues across all browser
+		document
+			.querySelector("meta[name=viewport]")
+			.setAttribute(
+				"content",
+				`width=device-width, initial-scale=${1 / window.devicePixelRatio}`
+			);
+    </script>
+
+</head>
+</html>

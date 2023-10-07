@@ -1,0 +1,25 @@
+<div class="font-body space-y-9">
+    <div class="flex justify-start gap-8">
+        <h1 class="font-heading font-[550] text-gray-900 text-5xl">
+            Ingredients
+        </h1>
+        <div class="flex gap-3 justify-center items-center">
+            <button>
+                <%- include("../../Icons/UI/Actions/Plus", { containerClass: "", svgClass: "w-10 stroke-gray-700" }) -%>
+            </button>
+            <p><%= servings; %> servings</p>
+            <button>
+                <%- include("../../Icons/UI/Actions/Minus", { containerClass: "", svgClass: "w-10 stroke-gray-700" }) -%>
+            </button>
+        </div>
+    </div>
+    <ul class="text-xl space-y-2 pl-0.5">
+        <% ingredients.forEach(ingredient => { %>
+            <li class="relative px-8 before:absolute before:w-4 before:h-4 before:rounded-full before:top-1/4 before:-left-0 before:bg-amber-600">
+                <span class="font-bold">
+                    <%= `${ingredient.quantity.num}${ingredient.quantity.suffix}` %>
+                </span> <%= ingredient.name; %>
+            </li>
+        <% }); %>
+    </ul>
+</div>

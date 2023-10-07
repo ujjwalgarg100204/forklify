@@ -1,0 +1,21 @@
+<%- include("./UI/HeadIncluder", {titleOfPage: "Confirm?"}) -%>
+<body class="font-heading bg-[hsl(73,42%,80%)] h-screen grid place-content-center">
+<main class="p-10 bg-white text-2xl space-y-10 text-center rounded-2xl">
+    <%- include("./Icons/UI/Actions/Leave", { containerClass: "w-52 h-52 p-12 mx-auto", svgClass: "w-full h-full fill-selected-mehandi" }) -%>
+    <div class="space-y-1">
+        <p><%= prompt; %></p>
+        <p>Are you sure?</p>
+    </div>
+    <div class="space-y-4">
+        <button class="rounded-full w-full p-2 text-white bg-selected-mehandi"
+                onclick="history.back()">
+            Naah, Just Kidding
+        </button>
+        <button class="rounded-full w-full p-2 text-selected-mehandi border border-selected-mehandi transition-all hover:text-white hover:bg-selected-mehandi"
+                onclick="window.location.href='<%= yesLink %>'">
+            <%= yesMessage %>
+        </button>
+    </div>
+</main>
+</body>
+</html>

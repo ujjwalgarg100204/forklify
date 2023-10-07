@@ -1,0 +1,21 @@
+<%- include("../../components/UI/HeadIncluder", {titleOfPage: "Confirm Logout", linkJS: ""}) -%>
+<body class="font-heading bg-[hsl(73,42%,80%)] h-screen grid place-content-center">
+<main class="p-10 bg-white text-2xl space-y-10 text-center rounded-2xl">
+    <%- include("../../components/Icons/UI/Actions/Leave", { containerClass: "w-52 h-52 p-12 mx-auto", svgClass: "w-full h-full fill-selected-mehandi" }) -%>
+    <div class="space-y-1">
+        <p>Oh no! You're leaving...</p>
+        <p>Are you sure?</p>
+    </div>
+    <div class="space-y-4">
+        <button class="rounded-full w-full p-2 text-white bg-selected-mehandi"
+                onclick="history.back()">
+            Naah, Just Kidding
+        </button>
+        <button class="rounded-full w-full p-2 text-selected-mehandi border border-selected-mehandi transition-all hover:text-white hover:bg-selected-mehandi"
+                onclick="window.location.href='/auth/logout'">
+            Yes, Log Me Out!
+        </button>
+    </div>
+</main>
+</body>
+</html>

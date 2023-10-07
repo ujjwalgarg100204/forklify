@@ -1,0 +1,27 @@
+<%- include("../../components/UI/HeadIncluder", { titleOfPage: "Explore Recipes" }) -%>
+<body class="font-body text-mehandi">
+<%- include("../../components/Layout/Header", { user, dropdownOption: "Recipe" }) -%>
+
+<main class="mt-20 space-y-20 pb-16 px-[10%]">
+    <h1 class="text-6xl font-bold font-heading tracking-tight text-center capitalize">
+        Recipes to Cook 🧑‍🍳
+    </h1>
+
+    <!-- Category wise recipes -->
+    <% categories.forEach(({ svg, category }) => { %>
+        <% const recipeArr = recipes.filter(recipe => recipe.category === category); %>
+
+        <% if (recipeArr.length > 0) { %>
+        <div class="flex gap-8 items-center relative group" role="list" id="<%= category ;%>">
+            <div class="rounded-full shadow-2xl bg-[rgb(188,108,37)] grid place-content-center w-36 h-36 space-y-2 p-8 group-hover:scale-110 transition-all">
+                <%- include(`../../components/Icons/Food/${svg}`, { containerClass: "w-12 h-12 mx-auto", svgClass: "fill-white h-full w-full" }) -%>
+                <p class="text-white font-bold font-heading text-center text-sm"><%= category; %></p>
+            </div>
+            <%- include("../../components/Recipe/Sliders/RecipeCardSlider", { name: category, recipes: recipeArr }) -%>
+        </div>
+        <% } %>
+    <% }); %>
+</main>
+<%- include("../../components/Layout/Footer") -%>
+</body>
+</html>

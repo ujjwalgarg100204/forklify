@@ -1,0 +1,16 @@
+<%- include("../../components/UI/HeadIncluder", { titleOfPage: "Browse Collection", linkJS: "" }) -%>
+<body>
+<%- include("../../components/Layout/Header", { user, dropdownOption: "Browse Collection" }) -%>
+
+<main class="mt-20 space-y-20 pb-24 px-[10%]">
+    <h1 class="text-6xl font-bold font-heading tracking-tight text-center capitalize text-mehandi">
+        <span class="font-normal mr-4">Collection:</span> <%= collection.title; %>
+    </h1>
+    <div class="relative flex items-center gap-10">
+        <%- include( "../../components/Recipe/Sliders/RecipeCardSlider", { name: "collection", recipes: collection.recipesContained }) -%>
+    </div>
+</main>
+
+<%- include("../../components/Layout/Footer") -%>
+</body>
+</html>

@@ -1,0 +1,11 @@
+<a class="flex gap-6 items-center border border-amber-400 p-8" href="/r/<%= recipe.id; %>">
+    <%- include("../../components/Icons/UI/ArrowTopRightPoint", { containerClass: "aspect-square w-16 rounded-full p-3 hover:bg-amber-100", svgClass: "w-full h-full stroke-amber-600" }) -%>
+    <img class="aspect-square rounded-full object-center object-cover w-28" src="<%= recipe.image %>"
+         alt="<%= recipe.title; %>" />
+    <div class="flex-1 space-y-3 pt-2">
+        <h1 class="font-heading text-3xl"><%= recipe.title; %></h1>
+        <p class="capitalize font-small-heading text-selected-mehandi text-lg">
+            <%= recipe.category; %>, <%= recipe.region; %>
+        </p>
+    </div>
+</a>

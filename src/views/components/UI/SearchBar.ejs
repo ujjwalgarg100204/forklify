@@ -1,0 +1,79 @@
+<div class="search-input font-small-heading bg-white relative shadow-lg w-[50rem] flex justify-start rounded-2xl py-2.5 px-6 gap-5 items-center selection:bg-amber-500 selection:text-white group">
+    <label for="search">
+        <%- include("../../components/Icons/UI/Actions/MagnifyingGlass", {
+        containerClass: "rounded-full p-1 group-hover:bg-[rgba(0,0,0,0.05)]",
+        svgClass: "w-8 fill-amber-600"
+        }) -%>
+    </label>
+    <input id="search" class="w-full text-black placeholder:text-[rgba(251,191,36,0.6)] text-lg focus:outline-none"
+           type="text"
+           placeholder="What do you want to cook?" />
+    <div class="autocom-box absolute inset-0 top-full w-full hidden flex-col pointer-events-none h-[24rem] shadow-2xl overflow-y-scroll divide-y divide-slate-200 bg-white z-50">
+        <!-- here list are inserted from javascript -->
+    </div>
+
+    <%- include("../../components/UI/Button", {btnClass: "absolute -right-2", id: "search-recipe", text: "Find recipe", type: "b"}) -%>
+
+</div>
+<script>
+	// selectors
+	const searchWrapper = $(".search-input");
+	const inputBox = $("input");
+
+	inputBox
+		.blur(async function() {
+			const searchQuery = inputBox.val();
+			if (searchQuery) {
+				// user has put some values in the input box
+				await searchRecipes(searchQuery);
+			} else {
+				// input box is empty
+				searchWrapper.removeClass("active");
+			}
+		});
+
+	async function searchRecipes(query) {
+		const serverResponse = await fetch(`/r/search/search-bar/${query}`);
+		if (serverResponse.status === 200) {
+			// successful in getting a response from the server
+			const recipesData = await serverResponse.json();
+			searchWrapper.addClass("active");
+			showSuggestions(recipesData.foundRecipes.map(recipe => toRecipeSearchCard(recipe)));
+		} else {
+			// unsuccessful in getting a response from the server
+			inputBox.val("Try Again, some Error Occurred");
+		}
+	}
+
+	function showSuggestions(list) {
+		$(".autocom-box")
+			.html("")
+			.html(
+				list.length === 0
+					? "<p class='text-rose-500'>No recipe found matching your search query</p>"
+					: list.join("")
+			);
+	}
+
+	function toRecipeSearchCard(recipe) {
+		const { id, image, title, region, category } = recipe;
+		return `
+		    <a class="flex gap-6 items-center p-8" href="/r/${id}">
+		        <div class="aspect-square w-16 rounded-full p-3 hover:bg-amber-100">
+                    <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor"
+                        class="w-full h-full stroke-amber-600">
+                        <path stroke-linecap="round" stroke-linejoin="round"
+                            d="M13.5 6H5.25A2.25 2.25 0 003 8.25v10.5A2.25 2.25 0 005.25 21h10.5A2.25 2.25 0 0018 18.75V10.5m-10.5 6L21 3m0 0h-5.25M21 3v5.25" />
+                    </svg>
+                </div>
+                <img class="aspect-square rounded-full object-center object-cover w-28" src="${image}"
+                     alt="${title}" />
+                <div class="flex-1 space-y-3 pt-2">
+                    <h1 class="font-heading text-3xl text-black">${title}</h1>
+                    <p class="capitalize font-small-heading text-selected-mehandi text-lg">
+                        ${category}, ${region}
+                    </p>
+                </div>
+            </a>`.trim()
+	}
+</script>

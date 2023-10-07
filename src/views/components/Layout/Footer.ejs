@@ -1,0 +1,90 @@
+<button class="m-4 absolute top-1/2 -translate-y-1/2 right-0 bg-[rgba(0,0,0,0.3)] z-50 cursor-pointer transition-all duration-300 hover:scale-110 rounded-xl"
+        id="menu">
+    <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor"
+         class="w-20 aspect-square stroke-amber-600">
+        <path stroke-linecap="round" stroke-linejoin="round"
+              d="M12 6.75a.75.75 0 110-1.5.75.75 0 010 1.5zM12 12.75a.75.75 0 110-1.5.75.75 0 010 1.5zM12 18.75a.75.75 0 110-1.5.75.75 0 010 1.5z" />
+    </svg>
+</button>
+<div class="h-screen w-screen bg-mehandi text-white fixed inset-0 -translate-x-full z-10 transition-all duration-200 flex justify-center items-center font-small-heading tracking-wider"
+     id="menu-canvas">
+    <ul class="grid grid-cols-3 px-[10%] gap-32 w-full">
+        <li class="space-y-8">
+            <h1 class="text-sm uppercase tracking-widest">Recipe</h1>
+            <ul class="space-y-2">
+                <li><a class="text-3xl transition-all duration-200 hover:text-amber-400 hover:underline" href="/r">Browse
+                        Recipes</a></li>
+                <li><a class="text-3xl transition-all duration-200 hover:text-amber-400 hover:underline"
+                       href="/r/popular">Popular</a></li>
+                <li><a class="text-3xl transition-all duration-200 hover:text-amber-400 hover:underline"
+                       href="/u/recipes/create">Create New Recipe</a></li>
+                <li><a class="text-3xl transition-all duration-200 hover:text-amber-400 hover:underline"
+                       href="/r/search">Search</a></li>
+            </ul>
+
+        </li>
+        <li class="space-y-8">
+            <h1 class="text-sm uppercase tracking-widest">Collection</h1>
+            <ul class="space-y-2">
+                <li><a class="text-3xl transition-all duration-200 hover:text-amber-400 hover:underline" href="/c">Browse
+                        Collections</a></li>
+                <li><a class="text-3xl transition-all duration-200 hover:text-amber-400 hover:underline"
+                       href="/u/collections/create">Create New Collection</a></li>
+                <li><a class="text-3xl transition-all duration-200 hover:text-amber-400 hover:underline"
+                       href="/c/search">Search</a></li>
+            </ul>
+
+        </li>
+        <li class="space-y-8">
+            <h1 class="text-sm uppercase tracking-widest">User Specific</h1>
+            <ul class="space-y-2">
+                <li>
+                    <a class="text-3xl transition-all duration-200 hover:text-amber-400 hover:underline" href="/u/">Dashboard</a>
+                </li>
+                <li><a class="text-3xl transition-all duration-200 hover:text-amber-400 hover:underline"
+                       href="/u/collections">Your Collections</a></li>
+                <li><a class="text-3xl transition-all duration-200 hover:text-amber-400 hover:underline"
+                       href="/u/recipes">Your Recipes</a></li>
+                <li><a class="text-3xl transition-all duration-200 hover:text-amber-400 hover:underline"
+                       href="/u/recipes/saved">Your Saved Recipes</a></li>
+            </ul>
+
+        </li>
+    </ul>
+</div>
+<footer class="grid grid-cols-2 px-40 p-20 bg-mehandi gap-x-16 gap-y-4 relative">
+    <a href="/">
+        <%- include("../Icons/Brand/Brand", {containerClass: "self-center w-[60%]", svgClass: ""}) %>
+    </a>
+    <ul class="grid grid-cols-2 text-white text-xl self-center gap-4">
+        <li>
+            <a href="/r/popular">Popular recipes</a>
+        </li>
+        <li>
+            <a href="/#explore-recipes">Explore recipes</a>
+        </li>
+        <li>
+            <a href="/privacy-policy">Privacy policy</a>
+        </li>
+        <li>
+            <a href="/about">About</a>
+        </li>
+        <li>
+            <a href="/#how-it-works">How it works</a>
+        </li>
+        <li>
+            <a href="/r/search">Recipes</a>
+        </li>
+        <li>
+            <a href="/conditions">Conditions</a>
+        </li>
+        <li>
+            <a href="/#top">Our app</a>
+        </li>
+    </ul>
+</footer>
+
+<script>
+	$("#menu").click(() => $("#menu-canvas").toggleClass("transform-none"))
+</script>
+</body>

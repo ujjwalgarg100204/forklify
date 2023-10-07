@@ -1,0 +1,27 @@
+<%- include("../../components/UI/HeadIncluder", { titleOfPage: "Browse Collection", linkJS: "" }) -%>
+<body>
+<%- include("../../components/Layout/Header", { user, dropdownOption: "Browse Collection" }) -%>
+
+<main class="mt-20 space-y-20 pb-24 px-[10%]">
+    <h1 class="text-6xl font-bold font-heading tracking-tight text-center capitalize">
+        Browse <%= personalised ? "Your" : "" %> Recipe Collections 🍲
+    </h1>
+    <ul class="flex gap-12 font-body justify-center">
+        <% collections.forEach(collection => { %>
+            <li class="flex flex-col gap-2 justify-between items-center">
+                <a href="/c/<%= collection._id.toString(); %>" class="space-y-5">
+                    <div class="rounded-full overflow-hidden w-32 h-32 drop-shadow-lg">
+                        <img class="w-full h-full object-center"
+                             src="<%= collection.image; %>"
+                             alt="<%= collection.title %>" />
+                    </div>
+                    <p class="text-selected-mehandi capitalize text-center text-lg"><%= collection.title; %></p>
+                </a>
+            </li>
+        <% }); %>
+    </ul>
+</main>
+
+<%- include("../../components/Layout/Footer") -%>
+</body>
+</html>

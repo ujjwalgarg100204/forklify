@@ -1,0 +1,34 @@
+<% const prevBtnId = `${name}PrevBtn`; %>
+<% const nextBtnId = `${name}NextBtn`; %>
+<% const swiperId = `${name}Swiper`; %>
+
+<div id="<%= prevBtnId; %>" class="swiper-button-prev" data-prev></div>
+
+<!-- Swiper -->
+<div class="swiper" id="<%= swiperId; %>">
+    <div class="swiper-wrapper">
+        <% recipes.sort((a, b) => b.stars - a.stars).forEach(recipe => { %>
+            <%- include("../RecipeCard", { recipe }) -%>
+        <% }) %>
+    </div>
+</div>
+<div id="<%= nextBtnId %>" class="swiper-button-next" data-next></div>
+
+<!-- Swiper JS -->
+<script src="https://cdn.jsdelivr.net/npm/swiper@9/swiper-bundle.min.js"></script>
+
+<!-- Initialize Swiper -->
+<script>
+	new Swiper("#<%= swiperId; %>", {
+		slidesPerView: "auto",
+		spaceBetween: 50,
+		// loop: true,
+		keyboard: {
+			enabled: true
+		},
+		navigation: {
+			prevEl: "#<%= prevBtnId; %>",
+			nextEl: "#<%= nextBtnId; %>",
+		},
+	});
+</script>
